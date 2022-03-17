@@ -1,5 +1,5 @@
 import React, { Fragment, useRef, useState } from "react";
-import { Button, Card, Form } from "react-bootstrap";
+import { Button, Card, Form, Alert } from "react-bootstrap";
 import { useAuth } from "../../contexts/auth-context";
 import { Link } from "react-router-dom";
 
@@ -25,7 +25,9 @@ const Signup = () => {
       return setError("Passwords do not match!")
     }
     try {
-      signUp(enteredEmail, enteredPass, enteredFName, enteredLName);
+      setError('')
+      setLoading(true)
+      signUp(enteredEmail, enteredPass);
     } catch {
         setError("There was a problem creating the account")
     }
@@ -36,6 +38,7 @@ const Signup = () => {
       <Card>
         <Card.Body>
           <h2 className="test-center mb-4">Sign Up</h2>
+          {error && <Alert variant="danger">{error}</Alert>}
           <Form onSubmit={(e) => submitHandler(e)}>
             <Form.Group id="first_name">
               <Form.Label>First Name</Form.Label>
@@ -57,7 +60,7 @@ const Signup = () => {
               <Form.Label>Confirm Password</Form.Label>
               <Form.Control type="password" ref={confirmPasswordRef} required />
             </Form.Group>
-            <Button className="w-100 m-4" type="submit">
+            <Button disabled={loading} className="w-100 m-4" type="submit">
               Sign Up
             </Button>
           </Form>

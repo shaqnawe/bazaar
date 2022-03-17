@@ -178,12 +178,12 @@ const AuthProvider = ({ children }) => {
           },
           { merge: true }
         );
-        setLoading(false);
         setCurrentUser({
           id: user.uid,
           email: user.email,
           loggedIn: true,
         });
+        setLoading(false);
       }
       // console.log(currentUser)
     });
