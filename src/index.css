@@ -14,13 +14,16 @@ main {
 body {
   background-color: lightyellow;
 }
+
+#root {
+  background-color: #F2F2F2;
+  height: 100vh;
+}
 #main-heading {
   position: absolute;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 50%;
-  height: 50%;
   transform: translate(-50%, -50%);
   letter-spacing: 2;
   left: 50%;
@@ -30,12 +33,53 @@ body {
   font-size: 6em;
   letter-spacing: 2;
   color: #A30B2E;
+  cursor: pointer;
+  text-shadow: 2px 2px #181818;
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+#main-heading:hover {
+  color: #DCB83E;
+  text-shadow: 2px 2px #A30B2E;
 }
 @font-face {
   font-family: 'Samarkan';
   src: url("./static/fonts/samarkan/SAMAN___.TTF") format("ttf");
 }
-
+#footer {
+  color: #181818;
+}
+#footer:hover {
+  color: #a30b2e;
+}
+#unauthorized {
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 300;
+}
+#err {
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 500;
+}
+#not-found {
+  height: 30vh;
+}
+#dasboard {
+  font-family: 'Quicksand', sans-serif;
+}
+#update-info {
+  font-family: 'Quicksand', sans-serif;
+}
+#cart-header {
+  font-family: 'Quicksand', sans-serif;
+}
+.notify {
+  text-decoration: none;
+  color: #181818;
+}
+.notify:hover {
+  text-decoration: none;
+  color: #a30b2e;
+}
 /* 
 body {
   background-color: #141114;

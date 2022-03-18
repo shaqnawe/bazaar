@@ -4,7 +4,7 @@ import { useAuth } from "../contexts/auth-context";
 const Cart = () => {
     return (
         <Fragment>
-            <h6>Shopping Cart</h6>
+            <h4 id="cart-header" className="col mt-4">Shopping Cart</h4>
         </Fragment>
     );
 };

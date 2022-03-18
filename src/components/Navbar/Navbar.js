@@ -2,16 +2,17 @@ import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/auth-context";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
+import { faShoppingCart, faUser, faSignIn, faSignOut, faUserPlus, faHome, faStoreAlt } from "@fortawesome/free-solid-svg-icons";
 import { useData } from "../../contexts/DataProvider";
 import "./Navbar.css";
 
 const Navbar = () => {
   const { currentUser, logOut } = useAuth();
   const { cart } = useData();
+  
   return (
     <Fragment>
-      <nav className="navbar navbar-expand-sm navbar-dark bg-dark">
+      <nav className="navbar navbar-expand-sm navbar-dark bg-muted">
         <a className="navbar-brand" to="#">
           Bazaar
         </a>
@@ -30,19 +31,31 @@ const Navbar = () => {
           <ul className="navbar-nav mr-auto mt-2 mt-lg-0 c">
             <li className="nav-item">
               <Link className="nav-link" to="/">
-                Home
+                <FontAwesomeIcon
+                  id="home"
+                  className="btn"
+                  icon={faHome}
+                ></FontAwesomeIcon>
               </Link>
             </li>
             <li className="nav-item">
               <Link className="nav-link" to="/shop">
-                Shop
+                <FontAwesomeIcon
+                  id="shop"
+                  className="btn"
+                  icon={faStoreAlt}
+                ></FontAwesomeIcon>
               </Link>
             </li>
             <li className="nav-link">
               <Link to="/shop/cart">
-                <FontAwesomeIcon id="cart" className="btn btn-muted" icon={faShoppingCart}>Cart</FontAwesomeIcon>
-                <span id="label" className="float-right badge badge-muted m-1">
-                  {cart.quantity}
+                <FontAwesomeIcon
+                  id="cart"
+                  className="btn"
+                  icon={faShoppingCart}
+                ></FontAwesomeIcon>
+                <span id="label" className="float-right badge badge-muted mt-1">
+                  {currentUser.loggedIn && cart.quantity}
                 </span>
               </Link>
             </li>
@@ -51,28 +64,44 @@ const Navbar = () => {
             {!currentUser.loggedIn && (
               <li>
                 <Link className="nav-link" to="/auth/signin">
-                  Sign In
+                  <FontAwesomeIcon
+                    id="signin"
+                    icon={faSignIn}
+                    className="btn"
+                  ></FontAwesomeIcon>
                 </Link>
               </li>
             )}
             {!currentUser.loggedIn && (
               <li>
                 <Link className="nav-link" to="/auth/signup">
-                  Sign Up
+                  <FontAwesomeIcon
+                    id="signup"
+                    icon={faUserPlus}
+                    className="btn"
+                  ></FontAwesomeIcon>
                 </Link>
               </li>
             )}
             {currentUser.loggedIn && (
               <li>
                 <Link className="nav-link" to="/profile">
-                  Profile
+                  <FontAwesomeIcon
+                    id="profile"
+                    icon={faUser}
+                    className="btn"
+                  ></FontAwesomeIcon>
                 </Link>
               </li>
             )}
             {currentUser.loggedIn && (
               <li>
                 <Link className="nav-link" to="." onClick={() => logOut()}>
-                  Logout
+                  <FontAwesomeIcon
+                    id="signout"
+                    icon={faSignOut}
+                    className="btn"
+                  ></FontAwesomeIcon>
                 </Link>
               </li>
             )}

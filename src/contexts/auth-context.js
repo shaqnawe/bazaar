@@ -49,6 +49,7 @@ const AuthProvider = ({ children }) => {
         signInWithEmailAndPassword(auth, email, password).then(() => {
           // Signed in
           console.log("Signed in successfully!");
+          navigate("/");
         });
       })
       .catch((error) => {

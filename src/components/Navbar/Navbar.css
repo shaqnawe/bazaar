@@ -1,14 +1,36 @@
 #auth {
-    list-style: none;
-    text-decoration: none;
+  list-style: none;
+  text-decoration: none;
 }
-a.nav-link {
-    color: lightgray;
+
+.navbar-dark a.navbar-brand {
+  font-family: 'Samarkan';
+  color: #181818;
 }
-#cart {
-    color: #181818;
-    background-color: #A30B2E;
+
+.navbar-dark a.navbar-brand:hover {
+  color: #a30b2e;
+  text-shadow: 1px 1px #DCB83E;
+  cursor: pointer;
 }
-#label {
-    color: #A30B2E;
+
+#home,
+#shop,
+#cart,
+#label,
+#signout,
+#signin,
+#signup,
+#profile {
+  color: #181818;
+}
+#home:hover,
+#shop:hover,
+#cart:hover,
+#label:hover,
+#signout:hover,
+#signin:hover,
+#signup:hover,
+#profile:hover {
+  color: #a30b2e;
 }
