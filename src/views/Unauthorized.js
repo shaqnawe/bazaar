@@ -1,6 +1,10 @@
-import React from "react";
+import React, { Fragment } from "react";
 
 const Unauthorized = () => {
-  return <div>You are unauthorized to view this page.</div>;
+  return (
+    <Fragment>
+      <div>You are unauthorized to view this page.</div>
+    </Fragment>
+  );
 };
 export default Unauthorized;

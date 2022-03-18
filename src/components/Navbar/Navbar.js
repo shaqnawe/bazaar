@@ -1,13 +1,17 @@
 import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/auth-context";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
+import { useData } from "../../contexts/DataProvider";
 import "./Navbar.css";
 
 const Navbar = () => {
   const { currentUser, logOut } = useAuth();
+  const { cart } = useData();
   return (
     <Fragment>
-      <nav className="navbar navbar-expand-sm navbar-light bg-muted">
+      <nav className="navbar navbar-expand-sm navbar-dark bg-dark">
         <a className="navbar-brand" to="#">
           Bazaar
         </a>
@@ -34,25 +38,13 @@ const Navbar = () => {
                 Shop
               </Link>
             </li>
-            <li className="nav-item dropdown">
-              <a
-                className="nav-link dropdown-toggle"
-                to="#"
-                id="dropdownId"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                Dropdown
-              </a>
-              <div className="dropdown-menu" aria-labelledby="dropdownId">
-                <a className="dropdown-item" to="#">
-                  Action 1
-                </a>
-                <a className="dropdown-item" to="#">
-                  Action 2
-                </a>
-              </div>
+            <li className="nav-link">
+              <Link to="/shop/cart">
+                <FontAwesomeIcon id="cart" className="btn btn-muted" icon={faShoppingCart}>Cart</FontAwesomeIcon>
+                <span id="label" className="float-right badge badge-muted m-1">
+                  {cart.quantity}
+                </span>
+              </Link>
             </li>
           </ul>
           <ul id="auth" className="form-inline my-2 my-lg-0">
@@ -79,7 +71,7 @@ const Navbar = () => {
             )}
             {currentUser.loggedIn && (
               <li>
-                <Link className="nav-link" to="." onClick={()=>logOut()}>
+                <Link className="nav-link" to="." onClick={() => logOut()}>
                   Logout
                 </Link>
               </li>

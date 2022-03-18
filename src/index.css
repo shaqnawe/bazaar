@@ -25,18 +25,18 @@ body {
   letter-spacing: 2;
   left: 50%;
   top: 50%;
-  font-family: 'Aclonica', sans-serif;
+  font-family: 'Samarkan', 'Aclonica', sans-serif;
   text-transform: uppercase;
   font-size: 6em;
   letter-spacing: 2;
   color: #A30B2E;
 }
-
-/* @font-face {
-  font-family: Clip;
-  src: url("https://acupoftee.github.io/fonts/Clip.ttf");
+@font-face {
+  font-family: 'Samarkan';
+  src: url("./static/fonts/samarkan/SAMAN___.TTF") format("ttf");
 }
 
+/* 
 body {
   background-color: #141114;
   background-image: linear-gradient(335deg, black 23px, transparent 23px),

@@ -7,6 +7,7 @@ import SignIn from "./views/SignIn";
 import SignUp from "./views/SignUp";
 import Profile from "./views/Profile";
 import Shop from './views/Shop';
+import Cart from './views/Cart';
 import Footer from "./components/Footer/Footer";
 
 const App = () => {
@@ -26,6 +27,7 @@ const App = () => {
             <Route exact path="/profile" element={<Navigate to="/auth/signin" />} />
           )}
           {currentUser.loggedIn && <Route exact path="/shop" element={<Shop />} />}
+          {currentUser.loggedIn && <Route exact path="/shop/cart" element={<Cart />} />}
           <Route exact path="*" element={<Navigate to="/" />} />
         </Routes>
       </main>

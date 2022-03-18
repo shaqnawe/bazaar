@@ -3,5 +3,12 @@
     text-decoration: none;
 }
 a.nav-link {
+    color: lightgray;
+}
+#cart {
     color: #181818;
+    background-color: #A30B2E;
+}
+#label {
+    color: #A30B2E;
 }
