@@ -138,14 +138,14 @@ const DataProvider = (props) => {
         }
       }
       // retrieve new cart state from database
-      // getCart()
+      getCart()
     }, 
     [db, currentUser.id]
   )
 
   useEffect(() => {
     getCart()
-  },[ currentUser.id, db ])
+  },[ currentUser.id])
 
   const getproducts = async () => {
     await axios
