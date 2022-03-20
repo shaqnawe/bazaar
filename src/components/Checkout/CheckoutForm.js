@@ -1,10 +1,5 @@
-import React, { Fragment } from "react";
 import { loadStripe } from "@stripe/stripe-js";
-import {
-  Elements,
-  ElementsConsumer,
-  CardElement,
-} from "@stripe/react-stripe-js";
+import React, { Fragment } from "react";
 
 let stripePromise;
 const getStripe = () => {

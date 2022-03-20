@@ -6,35 +6,13 @@ import { Card, ListGroup, ListGroupItem } from "react-bootstrap";
 const Cart = () => {
   const { cart } = useData();
 
-  const handleCheckout = (e) => {
-    e.preventDefault();
-
-    // fetch(`https://bazaar-products.herokuapp.com/api/v1/products/checkout`, {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({
-    //     cartData: cart.items,
-    //     redirect: `${window.location.protocol}//${window.location.host}`,
-    //   }),
-    // })
-    //   .then((res) => res.json())
-    //   .then((data) => {
-    //     console.log(data);
-
-    //     // redirect to the Stripe Popup Checkout session
-    //     window.location.href = data.sessionURL;
-    //   });
-  };
-
   return (
     <Fragment>
       <h1 id="cart-header" className="col mt-4">
         Shopping Cart
         <span className="float-right">
           <Link to="/shop/checkout">
-            <form onSubmit={(e) => handleCheckout(e)}>
+            <form>
               <input
                 id="checkout-button"
                 type="submit"
