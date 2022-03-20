@@ -1,30 +1,35 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { useData } from "../../contexts/DataProvider";
+import { ListGroup, ListGroupItem } from "react-bootstrap";
+import Card from "react-bootstrap/Card";
 
-export const ShopProduct = (props) => {
+const ShopProduct = (props) => {
   const { addToCart } = useData();
-  const product = props.product;
+  const product = props.data;
 
+  // Function for adding to cart
+  const addToCartHandler = (product) => {
+    addToCart(product);
+  };
   return (
-    <div className="card col-4">
-      <img className="card-img-top" src={product.image} alt={product.name} />
-      <div className="card-body">
-        <h4 className="card-title">
-          {product.name}
-          <span className="float-right">{`$${(product.price / 100).toFixed(
-            2
-          )}`}</span>
-        </h4>
-        <p className="card-text">This shirt is for a New Yorker.</p>
-      </div>
-      <div className="card-footer">
+    <Fragment>
+      <Card className="flex-column m-2" style={{ width: "18rem" }}>
+        <Card.Img variant="top" src={product.image} />
+        <Card.Body>
+          <Card.Title>{product.name}</Card.Title>
+          <Card.Text>{product.description}</Card.Text>
+        </Card.Body>
+        <ListGroup className="list-group-flush">
+          <ListGroupItem>{`$${product.price / 100}`}</ListGroupItem>
+        </ListGroup>
         <button
-          onClick={() => addToCart(product)}
-          className="btn btn-block btn-success"
+          className="btn btn-success text-warning"
+          onClick={() => addToCartHandler(product)}
         >
           Add To Cart
         </button>
-      </div>
-    </div>
+      </Card>
+    </Fragment>
   );
 };
+export default ShopProduct;
