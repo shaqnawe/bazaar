@@ -9,14 +9,14 @@ code {
   height: 85vh;
 }
 main {
-  height: 90vh;
+  height: 87vh;
 }
 body {
   background-color: lightyellow;
 }
 
 #root {
-  background-color: #F2F2F2;
+  background-color: #FCF8EC;
   height: 100vh;
 }
 #main-heading {
@@ -48,6 +48,7 @@ body {
 }
 #footer {
   color: #181818;
+  background-color: #FCF8EC;
 }
 #footer:hover {
   color: #a30b2e;
@@ -69,9 +70,14 @@ body {
 }
 #dasboard {
   font-family: 'Quicksand', sans-serif;
+  font-weight: 300;
+}
+#dasboard-update {
+  font-weight: 300;
 }
 #update-info {
   font-family: 'Quicksand', sans-serif;
+  font-weight: 300;
 }
 #cart-header {
   font-family: 'Quicksand', sans-serif;
