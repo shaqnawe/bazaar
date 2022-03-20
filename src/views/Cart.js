@@ -1,36 +1,26 @@
 import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 import { useData } from "../contexts/DataProvider";
-import { Card, ListGroup, ListGroupItem } from "react-bootstrap";
+import CartItem from "../components/Shop/CartItem";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 
 const Cart = () => {
   const { cart } = useData();
 
   return (
     <Fragment>
-      <h1 id="cart-header" className="col mt-4">
-        Shopping Cart
-        <span className="float-right">
-          <Link to="/shop/checkout">
-            <form>
-              <input
-                id="checkout-button"
-                type="submit"
-                className="btn btn-primary"
-                value="Checkout"
-              />
-            </form>
-          </Link>
-        </span>
-      </h1>
-      <hr />
-
-      <div className="card shopping-cart">
-        <div className="card-header bg-dark text-light">
-          <i className="fa fa-shopping-cart" aria-hidden="true"></i> Shopping
-          Cart
+      <div className="card shopping-cart mt-4">
+        <div id="card-header" className="card-header">
+          <FontAwesomeIcon
+            id="cart-icon"
+            className="btn"
+            icon={faShoppingCart}
+          ></FontAwesomeIcon>
+          Shopping Cart
           <Link
             to="/shop"
+            id="ctn-shop"
             className="btn btn-outline-info btn-sm pull-right float-right"
           >
             Continue Shopping
@@ -39,21 +29,7 @@ const Cart = () => {
         </div>
         <div className="card-body">
           {cart.items.map((item) => (
-            // <Cart key={item.id} data={item} />
-            <Card
-              className="flex-column m-2"
-              key={item.id}
-              style={{ width: "18rem" }}
-            >
-              <Card.Img variant="top" src={item.image} />
-              <Card.Body>
-                <Card.Title>{item.name}</Card.Title>
-                <Card.Text>{item.description}</Card.Text>
-              </Card.Body>
-              <ListGroup className="list-group-flush">
-                <ListGroupItem>{`$${item.price / 100}`}</ListGroupItem>
-              </ListGroup>
-            </Card>
+            <CartItem key={item.id} data={item} />
           ))}
         </div>
         <div className="card-footer">
@@ -70,6 +46,18 @@ const Cart = () => {
             </div>
           </div>
         </div>
+      </div>
+      <div className="mt-4">
+        <span className="float-right">
+          <Link to="/shop/checkout">
+            <input
+              id="checkout-button"
+              type="submit"
+              className="btn"
+              value="Checkout"
+            />
+          </Link>
+        </span>
       </div>
     </Fragment>
   );

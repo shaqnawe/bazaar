@@ -80,6 +80,27 @@ body {
   text-decoration: none;
   color: #a30b2e;
 }
+#trash:hover {
+  color: #a30b2e;
+}
+#checkout-button {
+  color: #181818;
+  background-color: #B1DC3E;
+}
+#cart-icon {
+  color:#60BFBF;
+}
+#cart-icon:hover {
+  cursor: pointer;
+}
+#card-header {
+  color: #60BFBF;
+  background-color: #181818;
+}
+#ctn-shop {
+  color: #181818;
+  background-color: #60BFBF;
+}
 /* 
 body {
   background-color: #141114;
