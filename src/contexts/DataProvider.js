@@ -79,6 +79,7 @@ const DataProvider = (props) => {
   //     //   console.log(userRef)
   //     setSent([{ id: newDoc.id, ...newDoc.data() }]);
   //   };
+
   const getCart = async() => {
     // Check if there is a logged-in user
     if (currentUser.id) {
@@ -106,6 +107,7 @@ const DataProvider = (props) => {
             productList.push({ ...res.data, quantity: doc.data().quantity });
             // increment the subtotal by the products' price * quantity
             subtotal += res.data.price * doc.data().quantity;
+            console.log(cartQuantity)
 
             setCart({
               items: [...productList],
@@ -138,7 +140,7 @@ const DataProvider = (props) => {
         }
       }
       // retrieve new cart state from database
-      getCart()
+      // getCart()
     }, 
     [db, currentUser.id]
   )
@@ -152,7 +154,7 @@ const DataProvider = (props) => {
       .get(`https://bazaar-products.herokuapp.com/api/v1/products`)
       .then((res) => {
         setProducts(res.data);
-        // console.log(res.data);
+        console.log(res.data);
       });
   };
 

@@ -25,15 +25,11 @@ const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   const signUp = (email, password) => {
-    return createUserWithEmailAndPassword(
-      auth,
-      email,
-      password
-    )
+    return createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
-        setCurrentUser(user);
+        setCurrentUser({ loggedIn: true });
         console.log("Successful signup");
         navigate("/");
       })
@@ -55,7 +51,7 @@ const AuthProvider = ({ children }) => {
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        return (errorCode, errorMessage);
+        return errorCode, errorMessage;
       });
   };
 

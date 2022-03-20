@@ -8,6 +8,7 @@ const Products = (props) => {
   const inputRef = useRef();
   const [filteredProducts, setFilteredProducts] = useState([]);
   const { addToCart } = useData();
+  // Functionality to be able to search for product using keywords
   const findProduct = (e) => {
     e.preventDefault();
     const filteredProductList = [];
@@ -24,6 +25,7 @@ const Products = (props) => {
     setFilteredProducts(filteredProductList);
     inputRef.current.value = "";
   };
+  // Function for adding to cart
   const addToCartHandler = (product) => {
     addToCart(product)
   };

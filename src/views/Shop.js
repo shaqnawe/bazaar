@@ -6,6 +6,7 @@ const Shop = () => {
     const { products } = useData();
     return (
       <Fragment>
+        <h1 id="shop-header">Shop</h1>
         <Products items={products} />
       </Fragment>
     );
