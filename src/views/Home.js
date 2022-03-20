@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 
-const Home = (props) => {
+const Home = () => {
   return (
     <Fragment>
       <div className="backdrop mt-4">

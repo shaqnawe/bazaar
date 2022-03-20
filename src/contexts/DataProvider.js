@@ -152,7 +152,7 @@ const DataProvider = (props) => {
       .get(`https://bazaar-products.herokuapp.com/api/v1/products`)
       .then((res) => {
         setProducts(res.data);
-        console.log(res.data);
+        // console.log(res.data);
       });
   };
 

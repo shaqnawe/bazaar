@@ -11,30 +11,19 @@ const getStripe = () => {
 
 const CheckoutForm = (props) => {
   const cartItems = props.items;
-  console.log(cartItems);
-  const itemsInCart = [];
-  for (let item of cartItems.items) {
-    const itemToAdd = {
-      id: item.id,
-      price: item.priceId,
-      quantity: item.quantity,
-    };
-    itemsInCart.push(itemToAdd);
-  }
-  let lineItems = itemsInCart.map((product) => ({
-    price: product.price,
+//   console.log(cartItems);
+  let lineItems = cartItems.items.map((product) => ({
+    price: product.priceId,
     quantity: product.quantity,
     id: product.id,
   }));
   console.log(lineItems)
-//   console.log(itemsInCart);
 
   const checkoutOptions = {
     lineItems: lineItems.map(item => {
-        const storeItem = itemsInCart.item
         return {
           price: item.price,
-          quantity: item.quantity,
+          quantity: item.quantity
         };
     }),
     mode: "payment",
