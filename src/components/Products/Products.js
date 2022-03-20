@@ -1,12 +1,11 @@
 import React, { Fragment, useRef, useState } from "react";
-import { useData } from "../../contexts/DataProvider";
 import ShopProduct from "../Shop/ShopProduct";
 
 const Products = (props) => {
   const products = props.items;
   const inputRef = useRef();
   const [filteredProducts, setFilteredProducts] = useState([]);
-  const { addToCart } = useData();
+
   // Functionality to be able to search for product using keywords
   const findProduct = (e) => {
     e.preventDefault();
@@ -21,10 +20,11 @@ const Products = (props) => {
         filteredProductList.push(product);
       }
     }
+    // Add filtered products to map as search result
     setFilteredProducts(filteredProductList);
     inputRef.current.value = "";
   };
-  
+
   return (
     <Fragment>
       <div className="container mt-4">
