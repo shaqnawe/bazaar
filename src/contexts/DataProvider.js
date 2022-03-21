@@ -124,8 +124,6 @@ const DataProvider = (props) => {
       const querySnapshot = await getDocs(userCartCollection);
       // console.log(querySnapshot)
       let productList = [];
-      // const q = query(collectionGroup(db, currentUser.id, "cart"));
-      // console.log(q)
 
       querySnapshot.forEach((doc) => {
         axios
@@ -246,12 +244,10 @@ const DataProvider = (props) => {
         currentUser.id,
         "orders"
       );
-      // get access to user's cart info
+      // get access to user's order info
       const querySnapshot = await getDocs(userOrderCollection);
       // console.log(querySnapshot)
       let ordersList = [];
-      // const q = query(collectionGroup(db, currentUser.id, "cart"));
-      // console.log(q)
 
       querySnapshot.forEach((doc) => {
         axios
@@ -280,13 +276,7 @@ const DataProvider = (props) => {
 
   const orderHistory = useCallback(
     async (productData) => {
-      const orderCollection = await collection(
-        db,
-        "users",
-        currentUser.id,
-        "orders"
-      );
-      const orderQuerySnapshot = await getDocs(orderCollection);
+      
       const orderRef = doc(
         db,
         "users",
