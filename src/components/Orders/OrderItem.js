@@ -29,22 +29,13 @@ const OrderItem = (props) => {
             <h6>
               <strong>
                 ${(product.price / 100).toFixed(2)}{" "}
-                <span className="text-muted">x</span>
               </strong>
+                <span className="text-dark ml-3">x</span>
             </h6>
           </div>
           <div className="col-4 col-sm-4 col-md-4">
             <div className="quantity">
-              <input
-                type="number"
-                step="1"
-                max="5"
-                min="1"
-                defaultValue={product.quantity}
-                title="Qty"
-                className="qty"
-                size="4"
-              />
+              <span>{product.quantity}</span>
             </div>
           </div>
         </div>

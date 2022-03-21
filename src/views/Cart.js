@@ -39,7 +39,6 @@ const Cart = () => {
             </div>
             <div className="cart-totals">
               Tax: <b>{`$${0}`}</b>
-              {/* Tax: <b>{`$${ cart.tax }`}</b> */}
             </div>
             <div className="cart-totals">
               Grand total: <b>{`$${(cart.grandtotal / 100).toFixed(2)}`}</b>

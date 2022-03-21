@@ -6,8 +6,7 @@ import { faListSquares } from "@fortawesome/free-solid-svg-icons";
 
 const Orders = () => {
   const { orders } = useData();
-//   const orderList = orders;
-  console.log(orders);
+  
   return (
     <Fragment>
       <div className="card shopping-cart mt-4">
