@@ -2,12 +2,13 @@ import React, { Fragment, useRef, useState } from "react";
 import { Form, Button, Card, Alert } from "react-bootstrap";
 import { useAuth } from "../../contexts/auth-context";
 import { Link } from "react-router-dom";
-import './Auth.css';
+import Loader from "../Loader/Loader";
+import "./Auth.css";
 
 const Signin = () => {
   const emailRef = useRef();
   const passwordRef = useRef();
-  const { currentUser, signIn } = useAuth();
+  const { currentUser, signIn, signInWithGoogle } = useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -16,16 +17,19 @@ const Signin = () => {
     const enteredEmail = emailRef.current.value;
     const enteredPass = passwordRef.current.value;
     try {
-      setLoading(true)
-      signIn(enteredEmail, enteredPass)
+      setLoading(true);
+      signIn(enteredEmail, enteredPass);
     } catch {
       setError("Failed to Login. Please check your email or password.");
     }
-    setLoading(false)
+    setLoading(false);
   };
 
   return (
     <Fragment>
+      {loading ? (
+        <Loader />
+      ) : (
         <Card>
           <Card.Body>
             <h2 className="test-center mb-4">Sign In</h2>
@@ -44,10 +48,20 @@ const Signin = () => {
               </Button>
             </Form>
           </Card.Body>
+          <div className="w-100 text-center mb-3">
+            <Link to="/auth/forgot-password">Forgot Password?</Link>
+          </div>
         </Card>
-        <div className="w-100 text-center mt-2">
-          Don't have an account?<Link to="/auth/signup">Register</Link>
-        </div>
+      )}
+      <button
+        onClick={() => signInWithGoogle()}
+        className="btn btn-outline-primary m-3"
+      >
+        Sign In with Google
+      </button>
+      <div className="w-100 text-center mt-2">
+        Don't have an account?<Link to="/auth/signup">Register</Link>
+      </div>
     </Fragment>
   );
 };

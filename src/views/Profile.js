@@ -12,7 +12,6 @@ const Profile = () => {
         <div className="container">
           <div className="row">
             <div className="col mt-2">
-              One of two columns
               <Link to="/profile/orders">
                 <button className="btn btn-info">Orders</button>
               </Link>

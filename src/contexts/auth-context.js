@@ -7,7 +7,10 @@ import {
   onAuthStateChanged,
   setPersistence,
   signInWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithPopup,
   signOut,
+  sendPasswordResetEmail,
 } from "firebase/auth";
 import { getFirestore, doc, setDoc } from "firebase/firestore";
 
@@ -20,6 +23,7 @@ export function useAuth() {
 const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState({ loggedIn: false });
   const auth = getAuth();
+  const provider = new GoogleAuthProvider();
   const db = getFirestore();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
@@ -55,6 +59,32 @@ const AuthProvider = ({ children }) => {
       });
   };
 
+  const signInWithGoogle = () => {
+    return setPersistence(auth, browserLocalPersistence)
+      .then(() => {
+        signInWithPopup(auth, provider).then((result) => {
+          // This gives you a Google Access Token. You can use it to access the Google API.
+          const credential = GoogleAuthProvider.credentialFromResult(result);
+          const token = credential.accessToken;
+          // The signed-in user info.
+          const user = result.user;
+          navigate("/");
+        });
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        console.log(errorCode);
+        const errorMessage = error.message;
+        console.log(errorMessage);
+        // The email of the user's account used.
+        const email = error.email;
+        console.log(email);
+        // The AuthCredential type that was used.
+        const credential = GoogleAuthProvider.credentialFromError(error);
+        console.log(credential);
+      });
+  };
+
   const logOut = () => {
     return signOut(auth)
       .then(() => {
@@ -66,7 +96,9 @@ const AuthProvider = ({ children }) => {
         console.log(error);
       });
   };
-
+  const resetPassword = (email) => {
+    return sendPasswordResetEmail(auth, email);
+  };
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -75,7 +107,7 @@ const AuthProvider = ({ children }) => {
           userRef,
           {
             email: user.email,
-            name: `${user?.first_name + "" + user?.last_name}`,
+            name: user?.displayName,
           },
           { merge: true }
         );
@@ -94,7 +126,9 @@ const AuthProvider = ({ children }) => {
     currentUser,
     signUp,
     signIn,
+    signInWithGoogle,
     logOut,
+    resetPassword,
   };
 
   return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>;

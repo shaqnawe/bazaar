@@ -6,7 +6,7 @@ import { faListSquares } from "@fortawesome/free-solid-svg-icons";
 
 const Orders = () => {
   const { orders } = useData();
-  
+
   return (
     <Fragment>
       <div className="card shopping-cart mt-4">
@@ -16,7 +16,7 @@ const Orders = () => {
             className="btn btn-lg"
             icon={faListSquares}
           ></FontAwesomeIcon>
-        <span>Order History</span>
+          <span>Order History</span>
           <div className="clearfix"></div>
         </div>
         <div className="card-body">
