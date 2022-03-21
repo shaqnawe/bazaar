@@ -114,14 +114,14 @@ const DataProvider = (props) => {
       let subtotal = 0;
       let tax = 0;
 
-      let userOrderCollection = await collection(
+      let userCartCollection = await collection(
         db,
         "users",
         currentUser.id,
         "cart"
       );
       // get access to user's cart info
-      const querySnapshot = await getDocs(userOrderCollection);
+      const querySnapshot = await getDocs(userCartCollection);
       // console.log(querySnapshot)
       let productList = [];
       // const q = query(collectionGroup(db, currentUser.id, "cart"));
@@ -233,41 +233,6 @@ const DataProvider = (props) => {
     }
   }, [db, currentUser.id]);
 
-  const orderHistory = useCallback(
-    async (productData) => {
-      const orderCollection = await collection(
-        db,
-        "users",
-        currentUser.id,
-        "orders"
-      );
-      const orderQuerySnapshot = await getDocs(orderCollection);
-      const orderRef = doc(
-        db,
-        "users",
-        currentUser.id,
-        "orders",
-        productData.id
-      );
-      const orderDoc = await getDoc(orderRef);
-      if (!orderDoc.exists()) {
-        await setDoc(orderRef, { quantity: 1 });
-      } else {
-        // increment the product's quantity by 1
-        let quantity = orderDoc.data().quantity;
-        quantity++;
-        // add update cart functionality
-        await updateDoc(
-          orderRef,
-          { quantity: Number(quantity) },
-          { merge: true }
-        );
-      }
-      getOrders();
-    },
-    [db, currentUser.id]
-  );
-
   const getOrders = async () => {
     // Check if there is a logged-in user
     if (currentUser.id) {
@@ -312,6 +277,41 @@ const DataProvider = (props) => {
       });
     }
   };
+
+  const orderHistory = useCallback(
+    async (productData) => {
+      const orderCollection = await collection(
+        db,
+        "users",
+        currentUser.id,
+        "orders"
+      );
+      const orderQuerySnapshot = await getDocs(orderCollection);
+      const orderRef = doc(
+        db,
+        "users",
+        currentUser.id,
+        "orders",
+        productData.id
+      );
+      const orderDoc = await getDoc(orderRef);
+      if (!orderDoc.exists()) {
+        await setDoc(orderRef, { quantity: 1 });
+      } else {
+        // increment the product's quantity by 1
+        let quantity = orderDoc.data().quantity;
+        quantity++;
+        // add update cart functionality
+        await updateDoc(
+          orderRef,
+          { quantity: Number(quantity) },
+          { merge: true }
+        );
+      }
+      getOrders();
+    },
+    [db, currentUser.id]
+  );
 
   const getproducts = async () => {
     await axios
