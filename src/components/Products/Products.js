@@ -1,11 +1,11 @@
-import React, { Fragment, useRef, useState } from "react";
+import React, { Fragment, useRef, useState, useEffect } from "react";
 import ShopProduct from "../Shop/ShopProduct";
 
 const Products = (props) => {
   const products = props.items;
   const inputRef = useRef();
   const [filteredProducts, setFilteredProducts] = useState([]);
-  const [filteredCategoryProducts, setFilteredCategoryProducts] = useState();
+  const [filteredCategoryProducts, setFilteredCategoryProducts] = useState([]);
 
   // Functionality to be able to search for product using keywords
   const findProduct = (e) => {
@@ -36,8 +36,9 @@ const Products = (props) => {
       }
     }
     setFilteredCategoryProducts(productCategoryList);
-    console.log(filteredCategoryProducts);
   };
+  useEffect(() => {
+  }, [filteredCategoryProducts]);
 
   return (
     <Fragment>
@@ -77,11 +78,18 @@ const Products = (props) => {
         </div>
       </div>
       <div className="container d-flex">
-        {filteredProducts.length < 1
+        {/* {filteredProducts.length < 1
           ? products.map((product) => (
               <ShopProduct key={product.id} data={product} />
             ))
           : filteredProducts.map((product) => (
+              <ShopProduct key={product.id} data={product} />
+            ))} */}
+        {filteredCategoryProducts.length < 1
+          ? products.map((product) => (
+              <ShopProduct key={product.id} data={product} />
+            ))
+          : filteredCategoryProducts.map((product) => (
               <ShopProduct key={product.id} data={product} />
             ))}
       </div>

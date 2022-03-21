@@ -1,5 +1,6 @@
 import { loadStripe } from "@stripe/stripe-js";
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
+import { useData } from '../../contexts/DataProvider';
 
 let stripePromise;
 const getStripe = () => {
@@ -10,6 +11,7 @@ const getStripe = () => {
 };
 
 const CheckoutForm = (props) => {
+  const { emptyCart } = useData();
   const cartItems = props.items;
 //   console.log(cartItems);
   let lineItems = cartItems.items.map((product) => ({
@@ -17,7 +19,7 @@ const CheckoutForm = (props) => {
     quantity: product.quantity,
     id: product.id,
   }));
-  console.log(lineItems)
+  // console.log(lineItems)
 
   const checkoutOptions = {
     lineItems: lineItems.map(item => {
@@ -37,6 +39,11 @@ const CheckoutForm = (props) => {
     const { error } = await stripe.redirectToCheckout(checkoutOptions);
     console.log("Stripe checkout error", error);
   };
+  
+  useEffect(() => {
+    emptyCart();
+  }, [redirectToCheckout]);
+  
 
   return (
     <Fragment>

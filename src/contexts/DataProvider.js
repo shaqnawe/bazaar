@@ -7,7 +7,21 @@ import React, {
 } from "react";
 import axios from "axios";
 import { useAuth } from "./auth-context";
-import { doc, getDocs, getDoc, getFirestore, query, collectionGroup, collection, setDoc, orderBy, updateDoc } from 'firebase/firestore';
+import {
+  doc,
+  getDocs,
+  getDoc,
+  getFirestore,
+  query,
+  collectionGroup,
+  collection,
+  setDoc,
+  setData,
+  orderBy,
+  onSnapshot,
+  deleteDoc,
+  updateDoc,
+} from "firebase/firestore";
 export const DataContext = React.createContext({
   //   token: "",
   //   isLoggedIn: false,
@@ -21,8 +35,15 @@ export function useData() {
 
 const DataProvider = (props) => {
   const [products, setProducts] = useState([]);
-  const [cart, setCart] = useState({ items: [], quantity: 0, subtotal: 0, tax: 0, grandtotal: 0 });
+  const [cart, setCart] = useState({
+    items: [],
+    quantity: 0,
+    subtotal: 0,
+    tax: 0,
+    grandtotal: 0,
+  });
   const { currentUser } = useAuth();
+  const [orders, setOrders] = useState();
   const db = getFirestore();
   //   const [messages, setMessages] = useState([]);
   //   const [sent, setSent] = useState([]);
@@ -80,22 +101,27 @@ const DataProvider = (props) => {
   //     setSent([{ id: newDoc.id, ...newDoc.data() }]);
   //   };
 
-  const getCart = async() => {
+  const getCart = async () => {
     // Check if there is a logged-in user
     if (currentUser.id) {
       let cartQuantity = 0;
       let subtotal = 0;
       let tax = 0;
 
-      let userCartCollection = await collection( db, 'users', currentUser.id, 'cart' )
+      let userCartCollection = await collection(
+        db,
+        "users",
+        currentUser.id,
+        "cart"
+      );
       // get access to user's cart info
-      const querySnapshot = await getDocs( userCartCollection )
+      const querySnapshot = await getDocs(userCartCollection);
       // console.log(querySnapshot)
-      let productList = []
+      let productList = [];
       // const q = query(collectionGroup(db, currentUser.id, "cart"));
       // console.log(q)
 
-      querySnapshot.forEach( doc => {
+      querySnapshot.forEach((doc) => {
         axios
           .get(
             `https://bazaar-products.herokuapp.com/api/v1/products/${doc.id}`
@@ -107,7 +133,7 @@ const DataProvider = (props) => {
             productList.push({ ...res.data, quantity: doc.data().quantity });
             // increment the subtotal by the products' price * quantity
             subtotal += res.data.price * doc.data().quantity;
-            console.log(cartQuantity)
+            // console.log(cartQuantity)
 
             setCart({
               items: [...productList],
@@ -116,58 +142,139 @@ const DataProvider = (props) => {
               grandtotal: subtotal.toFixed(2),
             });
           });
-      })
+      });
     }
-  }
+  };
+
   const addToCart = useCallback(
     async (productData) => {
       // if current user is logged in
-      if(currentUser.loggedIn) {
+      if (currentUser.loggedIn) {
         // access user's cart product from their collection
-        const productRef = doc( db, 'users', currentUser.id, 'cart', productData.id ) 
+        const productRef = doc(
+          db,
+          "users",
+          currentUser.id,
+          "cart",
+          productData.id
+        );
         // find the product
-        const productDoc = await getDoc( productRef )
+        const productDoc = await getDoc(productRef);
         // if the product does not exist
-        if(!productDoc.exists()) {
+        if (!productDoc.exists()) {
           // add the products's info to the Firebase database at the user's cart collection
-          await setDoc( productRef, { quantity: 1 } )
+          await setDoc(productRef, { quantity: 1 });
         } else {
           // increment the product's quantity by 1
           let quantity = productDoc.data().quantity;
           quantity++;
           // add update cart functionality
-          await updateDoc( productRef, { quantity: Number( quantity ) }, { merge: true } )
+          await updateDoc(
+            productRef,
+            { quantity: Number(quantity) },
+            { merge: true }
+          );
         }
       }
       // retrieve new cart state from database
-      getCart()
-    }, 
+      getCart();
+    },
     [db, currentUser.id]
-  )
+  );
+
+  // useEffect(() => {
+  //   const cartColRef = collection(db, "users", currentUser.id, "cart");
+  //   const unsubscribe = onSnapshot(cartColRef, (snapshot) => {
+  //     let cart = [];
+  //     snapshot.docs.forEach((doc) => {
+  //       cart.push({ ...doc.data, id: doc.id });
+  //     });
+  //     console.log(cart);
+  //   });
+  //   return unsubscribe;
+  // }, []);
+
+  // Query Cart collection to get each doc from cart and add it to a list (possibly orders list)
+  // const cartCollection = await collection(
+  //   db,
+  //   "users",
+  //   currentUser.id,
+  //   "cart"
+  // );
+  // const cartQuerySnapshot = await getDocs(cartCollection);
+  // const orderList = [];
+  //   cartQuerySnapshot.forEach((doc) => {
+  //     orderList.push( { ...doc.data(), id: doc.id } )
+  //   });
+  // for(let item of orderList) {
+  //   console.log(item)
+  // }
 
   useEffect(() => {
-    getCart()
-  },[currentUser.id])
+    getCart();
+  }, [currentUser.id]);
+
+  const emptyCart = useCallback(async () => {
+    if (currentUser.loggedIn) {
+      const cartRef = await collection(db, "users", currentUser.id, "cart");
+      const querySnapshot = await getDocs(cartRef);
+      querySnapshot.forEach((doc) => {
+        console.log(doc.data());
+        deleteDoc(doc.ref);
+        console.log("deleted qunatity");
+      });
+    }
+  }, [db, currentUser.id]);
+
+  const getOrders = async (productData) => {
+    const orderCollection = await collection(
+      db,
+      "users",
+      currentUser.id,
+      "orders"
+    );
+    console.log(orderCollection);
+    const orderQuerySnapshot = await getDocs(orderCollection);
+    console.log(orderQuerySnapshot);
+    const orderRef = doc(db, "users", currentUser.id, "orders", productData.id);
+    console.log(orderRef);
+    const orderDoc = await getDoc(orderRef);
+    console.log(orderDoc);
+    if (!orderDoc.exists()) {
+      await setDoc(orderRef, { quantity: 1 });
+    } else {
+      // increment the product's quantity by 1
+      let quantity = orderDoc.data().quantity;
+      quantity++;
+      // add update cart functionality
+      await updateDoc(
+        orderRef,
+        { quantity: Number(quantity) },
+        { merge: true }
+      );
+    }
+  };
 
   const getproducts = async () => {
     await axios
       .get(`https://bazaar-products.herokuapp.com/api/v1/products`)
       .then((res) => {
         setProducts(res.data);
-        console.log(res.data);
+        // console.log(res.data);
       });
   };
 
   useEffect(() => {
-    getproducts()
-  }, [])
-  
+    getproducts();
+  }, []);
 
   const values = {
     getproducts,
     products: products,
     cart: cart,
     addToCart,
+    getOrders,
+    emptyCart,
   };
 
   return (
