@@ -1,12 +1,13 @@
 import React, { Fragment, useRef, useState } from "react";
 import { Form, Button, Card, Alert } from "react-bootstrap";
 import { useAuth } from "../../contexts/auth-context";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Auth.css";
 
 const ForgotPassword = () => {
   const emailRef = useRef();
-  const { resetPassword } = useAuth();
+  const navigate = useNavigate();
+  const { forgotPassword } = useAuth();
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
@@ -15,9 +16,15 @@ const ForgotPassword = () => {
     e.preventDefault();
     const enteredEmail = emailRef.current.value;
     try {
-      setMessage("");  
+      setMessage("");
       setLoading(true);
-      await resetPassword(enteredEmail);
+      await forgotPassword(enteredEmail)
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error.message);
+        });
       setMessage("Check your inbox for next steps.");
     } catch {
       setError("Something went wrong, unable to reset password.");

@@ -96,9 +96,11 @@ const AuthProvider = ({ children }) => {
         console.log(error);
       });
   };
-  const resetPassword = (email) => {
-    return sendPasswordResetEmail(auth, email);
+  const forgotPassword = (email) => {
+    return sendPasswordResetEmail(auth, email, 
+      {url: 'http://localhost:3000/login'});
   };
+  
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -128,7 +130,7 @@ const AuthProvider = ({ children }) => {
     signIn,
     signInWithGoogle,
     logOut,
-    resetPassword,
+    forgotPassword,
   };
 
   return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>;
