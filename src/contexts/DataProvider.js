@@ -43,7 +43,13 @@ const DataProvider = (props) => {
     grandtotal: 0,
   });
   const { currentUser } = useAuth();
-  const [orders, setOrders] = useState([]);
+  const [orders, setOrders] = useState({
+    items: [],
+    quantity: 0,
+    subtotal: 0,
+    tax: 0,
+    grandtotal: 0,
+  });
   const db = getFirestore();
   //   const [messages, setMessages] = useState([]);
   //   const [sent, setSent] = useState([]);
@@ -108,14 +114,14 @@ const DataProvider = (props) => {
       let subtotal = 0;
       let tax = 0;
 
-      let userCartCollection = await collection(
+      let userOrderCollection = await collection(
         db,
         "users",
         currentUser.id,
         "cart"
       );
       // get access to user's cart info
-      const querySnapshot = await getDocs(userCartCollection);
+      const querySnapshot = await getDocs(userOrderCollection);
       // console.log(querySnapshot)
       let productList = [];
       // const q = query(collectionGroup(db, currentUser.id, "cart"));
@@ -212,6 +218,7 @@ const DataProvider = (props) => {
 
   useEffect(() => {
     getCart();
+    getOrders();
   }, [currentUser.id]);
 
   const emptyCart = useCallback(async () => {
@@ -226,28 +233,83 @@ const DataProvider = (props) => {
     }
   }, [db, currentUser.id]);
 
-  const orderHistory = async (productData) => {
-    const orderCollection = await collection(
-      db,
-      "users",
-      currentUser.id,
-      "orders"
-    );
-    const orderQuerySnapshot = await getDocs(orderCollection);
-    const orderRef = doc(db, "users", currentUser.id, "orders", productData.id);
-    const orderDoc = await getDoc(orderRef);
-    if (!orderDoc.exists()) {
-      await setDoc(orderRef, { quantity: 1 });
-    } else {
-      // increment the product's quantity by 1
-      let quantity = orderDoc.data().quantity;
-      quantity++;
-      // add update cart functionality
-      await updateDoc(
-        orderRef,
-        { quantity: Number(quantity) },
-        { merge: true }
+  const orderHistory = useCallback(
+    async (productData) => {
+      const orderCollection = await collection(
+        db,
+        "users",
+        currentUser.id,
+        "orders"
       );
+      const orderQuerySnapshot = await getDocs(orderCollection);
+      const orderRef = doc(
+        db,
+        "users",
+        currentUser.id,
+        "orders",
+        productData.id
+      );
+      const orderDoc = await getDoc(orderRef);
+      if (!orderDoc.exists()) {
+        await setDoc(orderRef, { quantity: 1 });
+      } else {
+        // increment the product's quantity by 1
+        let quantity = orderDoc.data().quantity;
+        quantity++;
+        // add update cart functionality
+        await updateDoc(
+          orderRef,
+          { quantity: Number(quantity) },
+          { merge: true }
+        );
+      }
+      getOrders();
+    },
+    [db, currentUser.id]
+  );
+
+  const getOrders = async () => {
+    // Check if there is a logged-in user
+    if (currentUser.id) {
+      let orderQuantity = 0;
+      let subtotal = 0;
+      let tax = 0;
+
+      let userOrderCollection = await collection(
+        db,
+        "users",
+        currentUser.id,
+        "orders"
+      );
+      // get access to user's cart info
+      const querySnapshot = await getDocs(userOrderCollection);
+      // console.log(querySnapshot)
+      let ordersList = [];
+      // const q = query(collectionGroup(db, currentUser.id, "cart"));
+      // console.log(q)
+
+      querySnapshot.forEach((doc) => {
+        axios
+          .get(
+            `https://bazaar-products.herokuapp.com/api/v1/products/${doc.id}`
+          )
+          .then((res) => {
+            // increment the cart's quantity by the product's quantity
+            orderQuantity += doc.data().quantity;
+            // add the data to products list, including quantity
+            ordersList.push({ ...res.data, quantity: doc.data().quantity });
+            // increment the subtotal by the products' price * quantity
+            subtotal += res.data.price * doc.data().quantity;
+            // console.log(orderQuantity)
+
+            setOrders({
+              items: [...ordersList],
+              quantity: orderQuantity,
+              subtotal: subtotal.toFixed(2),
+              grandtotal: subtotal.toFixed(2),
+            });
+          });
+      });
     }
   };
 
@@ -269,6 +331,8 @@ const DataProvider = (props) => {
     products: products,
     cart: cart,
     addToCart,
+    orders,
+    getOrders,
     orderHistory,
     emptyCart,
   };
