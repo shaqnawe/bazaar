@@ -3,7 +3,8 @@ import React, { Fragment } from 'react';
 const Orders = () => {
     return (
         <Fragment>
-            <h1>Orders</h1>
+            <h1>Order History</h1>
+            
         </Fragment>
     );
 }

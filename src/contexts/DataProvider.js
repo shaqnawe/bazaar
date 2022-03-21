@@ -43,7 +43,7 @@ const DataProvider = (props) => {
     grandtotal: 0,
   });
   const { currentUser } = useAuth();
-  const [orders, setOrders] = useState();
+  const [orders, setOrders] = useState([]);
   const db = getFirestore();
   //   const [messages, setMessages] = useState([]);
   //   const [sent, setSent] = useState([]);
@@ -226,20 +226,16 @@ const DataProvider = (props) => {
     }
   }, [db, currentUser.id]);
 
-  const getOrders = async (productData) => {
+  const orderHistory = async (productData) => {
     const orderCollection = await collection(
       db,
       "users",
       currentUser.id,
       "orders"
     );
-    console.log(orderCollection);
     const orderQuerySnapshot = await getDocs(orderCollection);
-    console.log(orderQuerySnapshot);
     const orderRef = doc(db, "users", currentUser.id, "orders", productData.id);
-    console.log(orderRef);
     const orderDoc = await getDoc(orderRef);
-    console.log(orderDoc);
     if (!orderDoc.exists()) {
       await setDoc(orderRef, { quantity: 1 });
     } else {
@@ -273,7 +269,7 @@ const DataProvider = (props) => {
     products: products,
     cart: cart,
     addToCart,
-    getOrders,
+    orderHistory,
     emptyCart,
   };
 

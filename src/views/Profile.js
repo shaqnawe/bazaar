@@ -1,5 +1,6 @@
 import React, { Fragment } from "react";
 import { Form, Button, Card } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 const Profile = () => {
   return (
@@ -10,7 +11,12 @@ const Profile = () => {
         </h1>
         <div className="container">
           <div className="row">
-            <div className="col mt-2">One of two columns</div>
+            <div className="col mt-2">
+              One of two columns
+              <Link to="/profile/orders">
+                <button className="btn btn-info">Orders</button>
+              </Link>
+            </div>
             <div className="col mt-2">
               <Card id="update-info">
                 <Card.Body>

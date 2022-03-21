@@ -13,6 +13,7 @@ import Checkout from "./views/Checkout";
 import Unauthorized from "./views/Unauthorized";
 import Success from "./components/Checkout/Success";
 import Cancel from "./components/Checkout/Cancel";
+import Orders from "./views/Orders";
 import "@stripe/stripe-js";
 
 const App = () => {
@@ -50,6 +51,7 @@ const App = () => {
           {currentUser.loggedIn && (
             <Route exact path="/shop/checkout" element={<Checkout />} />
           )}
+          {currentUser.loggedIn && <Route exact path="/profile/orders" element={<Orders />} />}
           <Route exact path="/success" element={<Success />} />
           <Route exact path="/cancel" element={<Cancel />} />
           <Route exact path="/unauthorized" element={<Unauthorized />} />
