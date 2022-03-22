@@ -4,19 +4,20 @@
 }
 
 .navbar-dark a.navbar-brand {
-  font-family: 'Samarkan';
+  font-family: "Samarkan";
   color: #181818;
 }
 
 .navbar-dark a.navbar-brand:hover {
   color: #a30b2e;
-  text-shadow: 1px 1px #DCB83E;
+  text-shadow: 1px 1px #dcb83e;
   cursor: pointer;
 }
 
 #home,
 #shop,
 #cart,
+#sell,
 #label,
 #signout,
 #signin,
@@ -27,6 +28,7 @@
 #home:hover,
 #shop:hover,
 #cart:hover,
+#sell:hover,
 #label:hover,
 #signout:hover,
 #signin:hover,

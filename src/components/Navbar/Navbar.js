@@ -59,6 +59,11 @@ const Navbar = () => {
                 </span>
               </Link>
             </li>
+            <li className="nav-link">
+              <Link to="/shop/sell">
+                <span id="sell" class="material-icons">sell</span>
+              </Link>
+            </li>
           </ul>
           <ul id="auth" className="form-inline my-2 my-lg-0">
             {!currentUser.loggedIn && (
