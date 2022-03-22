@@ -2,12 +2,12 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-.backdrop {
+/* .backdrop {
   background-image: url('../src/static/images/bazaar.jpeg');
   background-size: cover;
   background-repeat: no-repeat;
   height: 85vh;
-}
+} */
 main {
   height: 87vh;
 }
@@ -16,7 +16,7 @@ body {
 }
 
 #root {
-  background-color: #FCF8EC;
+  background-color: #75A87E;
   height: 100vh;
 }
 #main-heading {
@@ -48,7 +48,7 @@ body {
 }
 #footer {
   color: #181818;
-  background-color: #FCF8EC;
+  background-color: #75A87E;
 }
 #footer:hover {
   color: #a30b2e;

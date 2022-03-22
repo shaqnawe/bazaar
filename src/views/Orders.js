@@ -1,11 +1,12 @@
-import React, { Fragment } from "react";
-import { useData } from "../contexts/DataProvider";
-import OrderItem from "../components/Orders/OrderItem";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faListSquares } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React, { Fragment } from "react";
+import OrderItem from "../components/Orders/OrderItem";
+import { useData } from "../contexts/DataProvider";
 
 const Orders = () => {
   const { orders } = useData();
+  const message = "No previous orders... Nothing to see here 😵 ";
 
   return (
     <Fragment>
@@ -20,9 +21,11 @@ const Orders = () => {
           <div className="clearfix"></div>
         </div>
         <div className="card-body">
-          {orders.items.map((item) => (
-            <OrderItem key={item.id} data={item} />
-          ))}
+          {orders.items.length < 1 ? (
+            <h4>{message}</h4>
+          ) : (
+            orders.items.map((item) => <OrderItem key={item.id} data={item} />)
+          )}
         </div>
       </div>
     </Fragment>

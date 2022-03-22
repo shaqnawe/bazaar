@@ -3,8 +3,8 @@ import React, { Fragment } from "react";
 const Home = () => {
   return (
     <Fragment>
-      <div className="backdrop mt-4">
-          <h1 id="main-heading">Bazaar</h1>
+      <div>
+        <h1 id="main-heading">Bazaar</h1>
       </div>
     </Fragment>
   );

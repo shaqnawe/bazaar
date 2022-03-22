@@ -37,54 +37,31 @@ const Products = (props) => {
     }
     setFilteredCategoryProducts(productCategoryList);
   };
-  useEffect(() => {
-  }, [filteredCategoryProducts]);
+  useEffect(() => {}, [filteredCategoryProducts]);
 
   return (
     <Fragment>
       <div className="container mt-4">
-        <form onSubmit={findProduct} className="input-group mb-5">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Search"
-            ref={inputRef}
-          />
-          <div className="input-group-append">
-            <button type="submit" className="btn btn-block" id="search-btn">
-              Search
-            </button>
-          </div>
+        <form>
+          <label className="d-flex inline-flex justify-content-center">
+            <span className="mr-2">Shop by category</span>
+            <span>
+              <select
+                className="custom-select custom-select-sm"
+                name="category"
+                onChange={sortProductsByCategory}
+              >
+                <option defaultValue>Select Category</option>
+                <option value="electronics">Electronics</option>
+                <option value="sports">Sports</option>
+                <option value="board game">Board Games</option>
+                <option value="fashion">Fashion</option>
+              </select>
+            </span>
+          </label>
         </form>
-        <div>
-          <form>
-            <label className="d-flex inline-flex">
-              <span className="mr-3">Shop by category</span>
-              <span>
-                <select
-                  className="custom-select custom-select-sm"
-                  name="category"
-                  onChange={sortProductsByCategory}
-                >
-                  <option defaultValue>Select Category</option>
-                  <option value="electronics">Electronics</option>
-                  <option value="sports">Sports</option>
-                  <option value="board game">Board Games</option>
-                  <option value="fashion">Fashion</option>
-                </select>
-              </span>
-            </label>
-          </form>
-        </div>
       </div>
-      <div className="container d-flex">
-        {/* {filteredProducts.length < 1
-          ? products.map((product) => (
-              <ShopProduct key={product.id} data={product} />
-            ))
-          : filteredProducts.map((product) => (
-              <ShopProduct key={product.id} data={product} />
-            ))} */}
+      <div className="container d-flex justify-content-center mt-4">
         {filteredCategoryProducts.length < 1
           ? products.map((product) => (
               <ShopProduct key={product.id} data={product} />
