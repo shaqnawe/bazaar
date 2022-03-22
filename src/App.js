@@ -14,8 +14,9 @@ import Unauthorized from "./views/Unauthorized";
 import Success from "./components/Checkout/Success";
 import Cancel from "./components/Checkout/Cancel";
 import Orders from "./views/Orders";
-import "@stripe/stripe-js";
 import ForgotPassword from "./components/Auth/ForgotPassword";
+import ResetPassword from './components/Auth/ResetPassword';
+import "@stripe/stripe-js";
 
 const App = () => {
   const { currentUser } = useAuth();
@@ -53,6 +54,7 @@ const App = () => {
             <Route exact path="/shop/checkout" element={<Checkout />} />
           )}
           <Route exact path="/auth/forgot-password" element={<ForgotPassword />} />
+          <Route exact path="auth/reset-password" element={<ResetPassword />} />
           {currentUser.loggedIn && <Route exact path="/profile/orders" element={<Orders />} />}
           <Route exact path="/success" element={<Success />} />
           <Route exact path="/cancel" element={<Cancel />} />

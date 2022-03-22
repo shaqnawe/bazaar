@@ -11,6 +11,7 @@ import {
   signInWithPopup,
   signOut,
   sendPasswordResetEmail,
+  confirmPasswordReset,
 } from "firebase/auth";
 import { getFirestore, doc, setDoc } from "firebase/firestore";
 
@@ -97,10 +98,15 @@ const AuthProvider = ({ children }) => {
       });
   };
   const forgotPassword = (email) => {
-    return sendPasswordResetEmail(auth, email, 
-      {url: 'http://localhost:3000/login'});
+    return sendPasswordResetEmail(auth, email, {
+      url: "http://localhost:3000/login",
+    });
   };
-  
+
+  const resetPassword = (oobcode, newPassword) => {
+    return confirmPasswordReset(auth, oobcode, newPassword);
+  };
+
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -131,6 +137,7 @@ const AuthProvider = ({ children }) => {
     signInWithGoogle,
     logOut,
     forgotPassword,
+    resetPassword,
   };
 
   return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>;
