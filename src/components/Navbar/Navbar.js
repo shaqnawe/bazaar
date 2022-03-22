@@ -12,7 +12,7 @@ const Navbar = () => {
   
   return (
     <Fragment>
-      <nav className="navbar navbar-expand-sm navbar-dark bg-muted">
+      <nav id="nav" className="navbar navbar-expand-sm navbar-dark bg-muted">
         <a className="navbar-brand" to="#">
           Bazaar
         </a>

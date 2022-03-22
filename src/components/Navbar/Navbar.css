@@ -3,6 +3,10 @@
   text-decoration: none;
 }
 
+#nav {
+  background-color: #527658;
+}
+
 .navbar-dark a.navbar-brand {
   font-family: "Samarkan";
   color: #181818;
