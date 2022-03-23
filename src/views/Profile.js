@@ -1,8 +1,50 @@
-import React, { Fragment } from "react";
-import { Form, Button, Card } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import React, { Fragment, useRef, useState } from "react";
+import { Alert, Form, Button, Card } from "react-bootstrap";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/auth-context";
+import Loader from "../components/Loader/Loader";
 
 const Profile = () => {
+  const emailRef = useRef();
+  const navigate = useNavigate();
+  const passwordRef = useRef();
+  const confirmPasswordRef = useRef();
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const { currentUser, updateUserEmail, updateUserPassword } = useAuth();
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    const enteredEmail = emailRef.current.value;
+    const enteredPass = passwordRef.current.value;
+    const enteredConfirmPassword = confirmPasswordRef.current.value;
+
+    if (enteredPass !== enteredConfirmPassword) {
+      return setError("Passwords do not match!");
+    }
+    const promises = [];
+    setError("");
+    setLoading(true);
+    if (enteredEmail !== currentUser.email) {
+      promises.push(updateUserEmail(enteredEmail));
+    }
+    if (enteredPass) {
+      promises.push(updateUserPassword(enteredPass));
+    }
+    Promise.all(promises)
+      .then(() => {
+        <Alert variant="success">Information has been updated</Alert>;
+        navigate("/");
+      })
+      .catch((error) => {
+        console.log(error);
+        setError("Unable to update account information");
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
   return (
     <Fragment>
       <div className="container">
@@ -22,14 +64,33 @@ const Profile = () => {
                   <h2 id="dasboard-update" className="text-center mb-4">
                     Update Information
                   </h2>
-                  <Form>
+                  {error && <Alert variant="danger">{error}</Alert>}
+                  {loading && <Loader />}
+                  <Form onSubmit={(e) => submitHandler(e)}>
                     <Form.Group id="email">
                       <Form.Label>Email</Form.Label>
-                      <Form.Control type="email" />
+                      <Form.Control
+                        type="email"
+                        ref={emailRef}
+                        defaultValue={currentUser.email}
+                        required
+                      />
                     </Form.Group>
                     <Form.Group id="password">
                       <Form.Label>Password</Form.Label>
-                      <Form.Control type="password" />
+                      <Form.Control
+                        type="password"
+                        ref={passwordRef}
+                        placeholder="Leave blank to keep the same"
+                      />
+                    </Form.Group>
+                    <Form.Group id="password">
+                      <Form.Label>Confirm Password</Form.Label>
+                      <Form.Control
+                        type="password"
+                        ref={confirmPasswordRef}
+                        placeholder="Leave blank to keep the same"
+                      />
                     </Form.Group>
                     <Button className="w-50 mt-4" type="submit">
                       Update

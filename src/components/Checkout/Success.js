@@ -1,7 +1,15 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useData } from "../../contexts/DataProvider";
 
 const Success = () => {
+    const { emptyCart, getCart, cart } = useData();
+
+    useEffect(() => {
+      emptyCart();
+      getCart();
+    })
+    
     return (
       <Fragment>
         <h1>The Payment was successful</h1>

@@ -40,11 +40,6 @@ const CheckoutForm = (props) => {
     console.log("Stripe checkout error", error);
   };
   
-  useEffect(() => {
-    emptyCart();
-  }, [redirectToCheckout]);
-  
-
   return (
     <Fragment>
       <h4>Checkout</h4>

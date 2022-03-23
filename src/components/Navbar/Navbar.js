@@ -2,14 +2,22 @@ import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/auth-context";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faShoppingCart, faUser, faSignIn, faSignOut, faUserPlus, faHome, faStoreAlt } from "@fortawesome/free-solid-svg-icons";
+import {
+  faShoppingCart,
+  faUser,
+  faSignIn,
+  faSignOut,
+  faUserPlus,
+  faHome,
+  faStoreAlt,
+} from "@fortawesome/free-solid-svg-icons";
 import { useData } from "../../contexts/DataProvider";
 import "./Navbar.css";
 
 const Navbar = () => {
   const { currentUser, logOut } = useAuth();
   const { cart } = useData();
-  
+
   return (
     <Fragment>
       <nav id="nav" className="navbar navbar-expand-sm navbar-dark bg-muted">
@@ -60,8 +68,10 @@ const Navbar = () => {
               </Link>
             </li>
             <li className="nav-link">
-              <Link to="/shop/sell">
-                <span id="sell" class="material-icons">sell</span>
+              <Link to="/sell">
+                <span id="sell" className="material-icons">
+                  sell
+                </span>
               </Link>
             </li>
           </ul>

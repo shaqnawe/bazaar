@@ -1,8 +1,9 @@
+import "./Auth.css";
+import Loader from "../Loader/Loader";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../contexts/auth-context";
 import React, { Fragment, useRef, useState } from "react";
 import { Form, Button, Card, Alert } from "react-bootstrap";
-import { useAuth } from "../../contexts/auth-context";
-import { Link, useNavigate } from "react-router-dom";
-import "./Auth.css";
 
 const ForgotPassword = () => {
   const emailRef = useRef();
@@ -18,16 +19,13 @@ const ForgotPassword = () => {
     try {
       setMessage("");
       setLoading(true);
-      await forgotPassword(enteredEmail)
-        .then((response) => {
-          console.log(response);
-        })
-        .catch((error) => {
-          console.log(error.message);
-        });
-      setMessage("Check your inbox for next steps.");
-    } catch {
-      setError("Something went wrong, unable to reset password.");
+      await forgotPassword(enteredEmail).then((response) => {
+        console.log(response);
+        setMessage("Check your inbox for next steps.");
+      });
+    } catch (error) {
+      console.log(error);
+      setError("User not found, please check your email and try again.");
     }
     setLoading(false);
   };
@@ -37,6 +35,7 @@ const ForgotPassword = () => {
       <Card>
         <Card.Body>
           <h2 className="test-center mb-4">Password Reset</h2>
+          {loading && <Loader />}
           {error && <Alert variant="danger">{error}</Alert>}
           {message && <Alert variant="success">{message}</Alert>}
           <Form onSubmit={(e) => submitHandler(e)}>

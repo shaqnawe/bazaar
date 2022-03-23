@@ -10,6 +10,8 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
   signOut,
+  updateEmail,
+  updatePassword,
   sendPasswordResetEmail,
   confirmPasswordReset,
 } from "firebase/auth";
@@ -22,12 +24,12 @@ export function useAuth() {
 }
 
 const AuthProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState({ loggedIn: false });
   const auth = getAuth();
-  const provider = new GoogleAuthProvider();
   const db = getFirestore();
   const navigate = useNavigate();
+  const provider = new GoogleAuthProvider();
   const [loading, setLoading] = useState(true);
+  const [currentUser, setCurrentUser] = useState({ loggedIn: false });
 
   const signUp = (email, password) => {
     return createUserWithEmailAndPassword(auth, email, password)
@@ -97,6 +99,15 @@ const AuthProvider = ({ children }) => {
         console.log(error);
       });
   };
+
+  const updateUserEmail = (email) => {
+    return updateEmail(auth.currentUser, email)
+  }
+
+  const updateUserPassword = (password) => {
+    return updatePassword(auth.currentUser, password)
+  };
+
   const forgotPassword = (email) => {
     return sendPasswordResetEmail(auth, email, {
       url: "http://localhost:3000/login",
@@ -128,7 +139,7 @@ const AuthProvider = ({ children }) => {
       }
       // console.log(currentUser)
     });
-  }, [auth]);
+  }, [auth, db]);
 
   const values = {
     currentUser,
@@ -136,6 +147,8 @@ const AuthProvider = ({ children }) => {
     signIn,
     signInWithGoogle,
     logOut,
+    updateUserEmail,
+    updateUserPassword,
     forgotPassword,
     resetPassword,
   };

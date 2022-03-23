@@ -1,5 +1,5 @@
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 /* .backdrop {
@@ -16,7 +16,7 @@ body {
 }
 
 #root {
-  background-color: #75A87E;
+  background-color: #75a87e;
   height: 100vh;
 }
 #main-heading {
@@ -28,59 +28,59 @@ body {
   letter-spacing: 2;
   left: 50%;
   top: 50%;
-  font-family: 'Samarkan', 'Aclonica', sans-serif;
+  font-family: "Samarkan", "Aclonica", sans-serif;
   text-transform: uppercase;
   font-size: 6em;
   letter-spacing: 2;
-  color: #A30B2E;
+  color: #a30b2e;
   cursor: pointer;
   text-shadow: 2px 2px #181818;
   background-clip: text;
   -webkit-background-clip: text;
 }
 #main-heading:hover {
-  color: #DCB83E;
-  text-shadow: 2px 2px #A30B2E;
+  color: #dcb83e;
+  text-shadow: 2px 2px #a30b2e;
 }
 @font-face {
-  font-family: 'Samarkan';
+  font-family: "Samarkan";
   src: url("./static/fonts/samarkan/SAMAN___.TTF") format("ttf");
 }
 #footer {
   color: #181818;
-  background-color: #75A87E;
+  background-color: #75a87e;
 }
 #footer:hover {
   color: #a30b2e;
 }
 #unauthorized {
-  font-family: 'Quicksand', sans-serif;
+  font-family: "Quicksand", sans-serif;
   font-weight: 300;
 }
 #shop-header {
-  font-family: 'Quicksand', sans-serif;
+  font-family: "Quicksand", sans-serif;
   font-weight: 300;
 }
 #err {
-  font-family: 'Quicksand', sans-serif;
+  font-family: "Quicksand", sans-serif;
   font-weight: 500;
 }
 #not-found {
   height: 30vh;
 }
 #dasboard {
-  font-family: 'Quicksand', sans-serif;
+  font-family: "Quicksand", sans-serif;
   font-weight: 300;
 }
 #dasboard-update {
   font-weight: 300;
 }
 #update-info {
-  font-family: 'Quicksand', sans-serif;
+  font-family: "Quicksand", sans-serif;
   font-weight: 300;
 }
 #cart-header {
-  font-family: 'Quicksand', sans-serif;
+  font-family: "Quicksand", sans-serif;
 }
 .notify {
   text-decoration: none;
@@ -95,19 +95,25 @@ body {
 }
 #checkout-button {
   color: #181818;
-  background-color: #B1DC3E;
+  background-color: #b1dc3e;
 }
 #cart-icon {
-  color:#60BFBF;
+  color: #60bfbf;
 }
 #cart-icon:hover {
   cursor: pointer;
 }
 #card-header {
-  color: #60BFBF;
+  color: #60bfbf;
   background-color: #181818;
 }
 #ctn-shop {
   color: #181818;
-  background-color: #60BFBF;
+  background-color: #60bfbf;
+}
+#add-product:hover {
+  color: #b1dc3e;
+}
+#remove-product:hover {
+  color: #a30b2e;
 }

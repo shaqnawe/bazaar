@@ -6,8 +6,9 @@ import Navbar from "./components/Navbar/Navbar";
 import SignIn from "./views/SignIn";
 import SignUp from "./views/SignUp";
 import Profile from "./views/Profile";
-import Shop from './views/Shop';
-import Cart from './views/Cart';
+import Shop from "./views/Shop";
+import Cart from "./views/Cart";
+import Sell from "./views/Sell";
 import Footer from "./components/Footer/Footer";
 import Checkout from "./views/Checkout";
 import Unauthorized from "./views/Unauthorized";
@@ -15,7 +16,7 @@ import Success from "./components/Checkout/Success";
 import Cancel from "./components/Checkout/Cancel";
 import Orders from "./views/Orders";
 import ForgotPassword from "./components/Auth/ForgotPassword";
-import ResetPassword from './components/Auth/ResetPassword';
+import ResetPassword from "./components/Auth/ResetPassword";
 import "@stripe/stripe-js";
 
 const App = () => {
@@ -53,9 +54,18 @@ const App = () => {
           {currentUser.loggedIn && (
             <Route exact path="/shop/checkout" element={<Checkout />} />
           )}
-          <Route exact path="/auth/forgot-password" element={<ForgotPassword />} />
+          {currentUser.loggedIn && (
+            <Route exact path="/profile/orders" element={<Orders />} />
+          )}
+          {currentUser.loggedIn && (
+            <Route exact path="/sell" element={<Sell />} />
+          )}
+          <Route
+            exact
+            path="/auth/forgot-password"
+            element={<ForgotPassword />}
+          />
           <Route exact path="auth/reset-password" element={<ResetPassword />} />
-          {currentUser.loggedIn && <Route exact path="/profile/orders" element={<Orders />} />}
           <Route exact path="/success" element={<Success />} />
           <Route exact path="/cancel" element={<Cancel />} />
           <Route exact path="/unauthorized" element={<Unauthorized />} />

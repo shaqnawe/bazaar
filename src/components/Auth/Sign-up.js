@@ -1,8 +1,9 @@
+import './Auth.css';
+import Loader from "../Loader/Loader";
+import { Link } from "react-router-dom";
+import { useAuth } from "../../contexts/auth-context";
 import React, { Fragment, useRef, useState } from "react";
 import { Button, Card, Form, Alert } from "react-bootstrap";
-import { useAuth } from "../../contexts/auth-context";
-import { Link } from "react-router-dom";
-import './Auth.css';
 
 const Signup = () => {
   const userFNameRef = useRef();
@@ -26,12 +27,12 @@ const Signup = () => {
       return setError("Passwords do not match!")
     }
     try {
-      setError('')
       setLoading(true)
       signUp(enteredEmail, enteredPass);
     } catch {
         setError("There was a problem creating the account")
     }
+    setLoading(false);
   };
 
   return (
@@ -40,6 +41,7 @@ const Signup = () => {
           <Card.Body>
             <h2 className="text-center mb-4">Sign Up</h2>
             {error && <Alert variant="danger">{error}</Alert>}
+            {loading && <Loader />}
             <Form onSubmit={(e) => submitHandler(e)}>
               <Form.Group id="first_name">
                 <Form.Label>First Name</Form.Label>

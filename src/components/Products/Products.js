@@ -44,7 +44,7 @@ const Products = (props) => {
       <div className="container mt-4">
         <form>
           <label className="d-flex inline-flex justify-content-center">
-            <span className="mr-2">Shop by category</span>
+            <span className="mr-2">Categories</span>
             <span>
               <select
                 className="custom-select custom-select-sm"

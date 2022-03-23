@@ -219,6 +219,70 @@ const DataProvider = (props) => {
     getOrders();
   }, [currentUser.id]);
 
+  const updateCart = useCallback(
+    async (productData, value) => {
+      if (currentUser.loggedIn) {
+        // access user's cart product from their collection
+        const productRef = doc(
+          db,
+          "users",
+          currentUser.id,
+          "cart",
+          productData.id
+        );
+        // find the product
+        const productDoc = await getDoc(productRef);
+        // if the product does not exist
+        if (value === "remove" && !productDoc.exists()) {
+          console.log("item no longer in cart");
+        } else if (value === "remove" && productDoc.data().quantity > 1) {
+          // decrease the product's quantity by 1
+          let quantity = productDoc.data().quantity;
+          quantity--;
+          // add update cart functionality
+          await updateDoc(
+            productRef,
+            { quantity: Number(quantity) },
+            { merge: true }
+          );
+        } else if (value === "add" && productDoc.exists()) {
+          // increase the product's quantity by 1
+          let quantity = productDoc.data().quantity;
+          quantity++;
+          // add update cart functionality
+          await updateDoc(
+            productRef,
+            { quantity: Number(quantity) },
+            { merge: true }
+          );
+        }
+      }
+      getCart();
+    },
+    [db, currentUser.id]
+  );
+
+  const deleteCartItem = useCallback(
+    async (productData) => {
+      if (currentUser.loggedIn) {
+        // access user's cart product from their collection
+        const productRef = doc(
+          db,
+          "users",
+          currentUser.id,
+          "cart",
+          productData.id
+        );
+        console.log(productRef);
+        if (productRef) {
+          deleteDoc(productRef).then(console.log("Item removed from cart"));
+        }
+      }
+      getCart();
+    },
+    [db, currentUser.id]
+  );
+
   const emptyCart = useCallback(async () => {
     if (currentUser.loggedIn) {
       const cartRef = await collection(db, "users", currentUser.id, "cart");
@@ -276,7 +340,6 @@ const DataProvider = (props) => {
 
   const orderHistory = useCallback(
     async (productData) => {
-      
       const orderRef = doc(
         db,
         "users",
@@ -325,6 +388,9 @@ const DataProvider = (props) => {
     getOrders,
     orderHistory,
     emptyCart,
+    getCart,
+    updateCart,
+    deleteCartItem,
   };
 
   return (

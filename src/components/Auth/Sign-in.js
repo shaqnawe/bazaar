@@ -9,18 +9,24 @@ const Signin = () => {
   const emailRef = useRef();
   const passwordRef = useRef();
   const { currentUser, signIn, signInWithGoogle } = useAuth();
+  const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
     const enteredEmail = emailRef.current.value;
     const enteredPass = passwordRef.current.value;
     try {
+      setMessage("");
       setLoading(true);
-      signIn(enteredEmail, enteredPass);
-    } catch {
-      setError("Failed to Login. Please check your email or password.");
+      await signIn(enteredEmail, enteredPass).then((response) => {
+        console.log(response);
+        setMessage("Logging In");
+      });
+    } catch (error) {
+      console.log(error);
+      setError("Please check your username or password and try again.");
     }
     setLoading(false);
   };
@@ -33,7 +39,9 @@ const Signin = () => {
         <Card>
           <Card.Body>
             <h2 className="test-center mb-4">Sign In</h2>
+            {loading && <Loader />}
             {error && <Alert variant="danger">{error}</Alert>}
+            {message && <Alert variant="success">{message}</Alert>}
             <Form onSubmit={(e) => submitHandler(e)}>
               <Form.Group id="email">
                 <Form.Label>Email</Form.Label>

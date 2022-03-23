@@ -1,9 +1,28 @@
-import React, { Fragment } from "react";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import React, { Fragment, useState } from "react";
+import { faTrash, faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useData } from "../../contexts/DataProvider";
 
 const CartItem = (props) => {
   const item = props.data;
+  const { cart, updateCart, emptyCart, getCart, deleteCartItem } = useData();
+  const [add, setAdd] = useState("add");
+  const [remove, setRemove] = useState("remove");
+  const addProduct = async (e) => {
+    e.preventDefault();
+    // console.log(add)
+    await updateCart(item, add).then(console.log("item added."));
+  };
+  const removeProduct = async (e) => {
+    e.preventDefault();
+    // console.log(remove)
+    await updateCart(item, remove).then(console.log("item removed."));
+  };
+
+  const deleteItem = async (e) => {
+    e.preventDefault();
+    await deleteCartItem(item).then(console.log("Item deleted from cart."));
+  };
 
   return (
     <Fragment>
@@ -32,22 +51,31 @@ const CartItem = (props) => {
             <h6>
               <strong>
                 ${(item.price / 100).toFixed(2)}{" "}
-                <span className="text-muted">x</span>
+                <span className="text-muted ml-2">x</span>
               </strong>
             </h6>
           </div>
           <div className="col-4 col-sm-4 col-md-4">
             <div className="quantity">
-              <input
-                type="number"
-                step="1"
-                max="5"
-                min="1"
-                defaultValue={item.quantity}
-                title="Qty"
-                className="qty"
-                size="4"
-              />
+              <span>
+                <strong>{item.quantity}</strong>
+              </span>
+              <span onClick={(e) => addProduct(e)}>
+                <FontAwesomeIcon
+                  id="add-product"
+                  className="btn btn-sm"
+                  icon={faPlus}
+                  onClick={() => setAdd("add")}
+                ></FontAwesomeIcon>
+              </span>
+              <span onClick={(e) => removeProduct(e)}>
+                <FontAwesomeIcon
+                  id="remove-product"
+                  className="btn btn-sm"
+                  icon={faMinus}
+                  onClick={() => setRemove("remove")}
+                ></FontAwesomeIcon>
+              </span>
             </div>
           </div>
           <div className="col-2 col-sm-2 col-md-2 text-right">
@@ -55,6 +83,7 @@ const CartItem = (props) => {
               id="trash"
               className="btn btn-sm"
               icon={faTrash}
+              onClick={(e) => deleteItem(e)}
             ></FontAwesomeIcon>
           </div>
         </div>

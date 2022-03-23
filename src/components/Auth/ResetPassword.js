@@ -1,7 +1,8 @@
-import React, { Fragment, useState, useRef } from "react";
+import Loader from "../Loader/Loader";
 import { Form, Card, Alert } from "react-bootstrap";
-import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../../contexts/auth-context";
+import React, { Fragment, useState, useRef } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 
 // A custom hook that builds on useLocation to parse
 // the query string for you.
@@ -17,11 +18,13 @@ const ResetPassword = () => {
   const { resetPassword } = useAuth();
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const submitHandler = async (e) => {
     e.preventDefault();
     const enteredPass = passwordRef.current.value;
     try {
+        setLoading(true);
       await resetPassword(query.get("oobCode"), enteredPass).then(
         (response) => {
           setMessage("Password has been updated.");
@@ -33,6 +36,7 @@ const ResetPassword = () => {
       setError(error.message);
       console.log(error.message);
     }
+    setLoading(false)
   };
 
   return (
@@ -40,6 +44,7 @@ const ResetPassword = () => {
       <Card>
         <Card.Body>
           <h2 className="text-center">Reset password</h2>
+          {loading && <Loader />}
           {error && <Alert variant="danger">{error}</Alert>}
           {message && <Alert variant="success">{message}</Alert>}
           <Form
