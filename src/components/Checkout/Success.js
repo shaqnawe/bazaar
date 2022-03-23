@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useData } from "../../contexts/DataProvider";
 
 const Success = () => {
-    const { emptyCart, getCart, cart } = useData();
+    const { emptyCart, getCart } = useData();
 
     useEffect(() => {
       emptyCart();

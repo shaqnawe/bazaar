@@ -7,6 +7,7 @@ const Shop = () => {
     return (
       <Fragment>
         <h1 id="shop-header">Shop</h1>
+        <hr/>
         <Products items={products} />
       </Fragment>
     );

@@ -22,7 +22,14 @@ import {
   deleteDoc,
   updateDoc,
 } from "firebase/firestore";
-export const DataContext = React.createContext({
+import {
+  getDownloadURL,
+  getStorage,
+  ref,
+  uploadBytesResumable,
+} from "firebase/storage";
+
+export const DataContext = createContext({
   //   token: "",
   //   isLoggedIn: false,
   //   login: (token) => {},
@@ -34,6 +41,9 @@ export function useData() {
 }
 
 const DataProvider = (props) => {
+  const db = getFirestore();
+  const { currentUser } = useAuth();
+  const [data, setData] = useState({});
   const [products, setProducts] = useState([]);
   const [cart, setCart] = useState({
     items: [],
@@ -42,7 +52,6 @@ const DataProvider = (props) => {
     tax: 0,
     grandtotal: 0,
   });
-  const { currentUser } = useAuth();
   const [orders, setOrders] = useState({
     items: [],
     quantity: 0,
@@ -50,62 +59,38 @@ const DataProvider = (props) => {
     tax: 0,
     grandtotal: 0,
   });
-  const db = getFirestore();
-  //   const [messages, setMessages] = useState([]);
-  //   const [sent, setSent] = useState([]);
-  //   const { currentUser } = useAuth();
-  //   let userEmail;
 
-  //   const db = getFirestore();
+  const addProductInfo = async (productData) => {
+    console.log(
+      productData.name,
+      productData.description,
+      productData.category,
+      productData.price,
+      productData.type,
+      productData.image
+    );
+    if (currentUser.loggedIn) {
+      const productRef = doc(
+        db,
+        "users",
+        currentUser.id,
+        "products",
+        productData.name
+      );
+      const productDoc = await getDoc(productRef);
 
-  //   const getMessages = useCallback(async () => {
-  //     const q = query(collectionGroup(db, "messages"));
-
-  //     let newMessages = [];
-
-  //     const querySnapshot = await getDocs(q);
-
-  //     querySnapshot.forEach(async (doc) => {
-  //       const userRef = await getDoc(doc.ref.parent.parent);
-
-  //       newMessages.push({
-  //         id: doc.id,
-  //         ...doc.data(),
-  //         user: { ...userRef.data() },
-  //       });
-  //       setMessages(newMessages);
-  //     });
-  //     return querySnapshot;
-  //   }, [db]);
-  //   const getSent = useCallback(async () => {
-  //     const q = query(collectionGroup(db, "sent"));
-
-  //     let updatedSent = [];
-  //     const querySnapshot = await getDocs(q);
-
-  //     querySnapshot.forEach(async (doc) => {
-  //       const userRef = await getDoc(doc.ref.parent.parent);
-  //       userEmail = userRef.data().email;
-
-  //       updatedSent.push({
-  //         id: doc.id,
-  //         ...doc.data(),
-  //         user: userEmail,
-  //       });
-  //       setSent(updatedSent);
-  //       console.log(updatedSent);
-  //     });
-  //     return querySnapshot;
-  //   }, [db]);
-
-  //   const sendEmail = async (emailData) => {
-  //     let collectionRef = await collection(db, `users/${currentUser.id}/sent`);
-  //     const docRef = await addDoc(collectionRef, emailData);
-  //     const newDoc = await getDoc(docRef);
-  //     const userRef = await getDoc(docRef.parent.parent);
-  //     //   console.log(userRef)
-  //     setSent([{ id: newDoc.id, ...newDoc.data() }]);
-  //   };
+      if (!productDoc.exists()) {
+        await setDoc(productRef, {
+          name: productData.name,
+          description: productData.description,
+          category: productData.category,
+          price: productData.price,
+          type: productData.type,
+          imgUrl: productData.image,
+        });
+      }
+    }
+  };
 
   const getCart = async () => {
     // Check if there is a logged-in user
@@ -290,7 +275,7 @@ const DataProvider = (props) => {
       querySnapshot.forEach((doc) => {
         console.log(doc.data());
         deleteDoc(doc.ref);
-        console.log("deleted qunatity");
+        console.log("deleted quantity");
       });
     }
   }, [db, currentUser.id]);
@@ -391,6 +376,7 @@ const DataProvider = (props) => {
     getCart,
     updateCart,
     deleteCartItem,
+    addProductInfo,
   };
 
   return (

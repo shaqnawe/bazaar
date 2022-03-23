@@ -9,15 +9,16 @@ code {
   height: 85vh;
 } */
 main {
-  height: 87vh;
+  overflow: auto;
+  height: 100vh;
 }
 body {
-  background-color: lightyellow;
+  background-color: #75a87e;
+  display: block;
 }
 
 #root {
   background-color: #75a87e;
-  height: 100vh;
 }
 #main-heading {
   position: absolute;
@@ -49,6 +50,7 @@ body {
 #footer {
   color: #181818;
   background-color: #75a87e;
+  height: 3rem;
 }
 #footer:hover {
   color: #a30b2e;
@@ -116,4 +118,45 @@ body {
 }
 #remove-product:hover {
   color: #a30b2e;
+}
+#sell-header {
+  font-family: "Quicksand", sans-serif;
+  font-weight: 300;
+}
+#product-form {
+  align-items: center;
+  justify-content: center;
+  font-family: "Quicksand", sans-serif;
+}
+input[type="file"]::file-selector-button {
+  border: 2px solid #181818;
+  font-family: "Quicksand", sans-serif;
+  padding: 0.2em 0.4em;
+  border-radius: 0.2em;
+  background-color: #527658;
+  transition: 0.5s;
+}
+input[type="file"]::file-selector-button:hover {
+  background-color: #75a87e;
+  border: 2px solid #527658;
+}
+#upload, #info-adder, #preview-img {
+  border: 2px solid #181818;
+  font-family: "Quicksand", sans-serif;
+  padding: 0.2em 0.4em;
+  border-radius: 0.2em;
+  background-color: #527658;
+  transition: 0.5s;
+}
+#upload:hover, #info-adder:hover, #preview-img:hover {
+  background-color: #75a87e;
+  border: 2px solid #527658;
+}
+#image-preview {
+  height: 80%rem;
+  width: 80%;
+  background-size: cover !important;
+  background-repeat: no-repeat;
+  object-fit: cover;
+  overflow:hidden;
 }
