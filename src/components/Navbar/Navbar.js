@@ -25,10 +25,7 @@ const Navbar = () => {
   return (
     <Fragment>
       <nav id="nav" className="navbar navbar-expand-sm navbar-dark bg-muted">
-        <a
-          className="navbar-brand"
-          to="#"
-        >
+        <a className="navbar-brand" to="#">
           Bazaar
         </a>
         <button
@@ -46,7 +43,7 @@ const Navbar = () => {
           <ul className="navbar-nav mr-auto mt-2 mt-lg-0 c">
             <li className="nav-item">
               <Link className="nav-link" to="/">
-                <Tippy arrow={false} content="Home">
+                <Tippy content="Home">
                   <button className="btn btn-sm btn-muted">
                     <FontAwesomeIcon id="home" icon={faHome}></FontAwesomeIcon>
                   </button>
@@ -55,7 +52,7 @@ const Navbar = () => {
             </li>
             <li className="nav-item">
               <Link className="nav-link" to="/shop">
-                <Tippy arrow={false} content="Shop">
+                <Tippy content="Shop">
                   <button className="btn btn-sm btn-muted">
                     <FontAwesomeIcon
                       id="shop"
@@ -67,7 +64,7 @@ const Navbar = () => {
             </li>
             <li className="nav-link">
               <Link to="/shop/cart">
-                <Tippy arrow={false} content="Cart">
+                <Tippy content="Cart">
                   <button className="btn btn-sm btn-muted">
                     <FontAwesomeIcon
                       id="cart"
@@ -75,14 +72,22 @@ const Navbar = () => {
                     ></FontAwesomeIcon>
                   </button>
                 </Tippy>
-                <span id="label" className="float-right badge badge-muted mt-1">
-                  {currentUser.loggedIn && cart.quantity}
-                </span>
+                <Tippy
+                
+                  content={`${cart.quantity}` + " items in cart"}
+                >
+                  <span
+                    id="label"
+                    className="float-right badge badge-muted mt-1"
+                  >
+                    {currentUser.loggedIn && cart.quantity}
+                  </span>
+                </Tippy>
               </Link>
             </li>
             <li className="nav-link">
               <Link to="/shop/list-products">
-                <Tippy arrow={false} content="List Items">
+                <Tippy content="Sell on bazaar">
                   <button className="btn btn-sm btn-muted">
                     <FontAwesomeIcon
                       id="user-listings"
@@ -94,7 +99,7 @@ const Navbar = () => {
             </li>
             <li className="nav-link">
               <Link to="/shop/user-listings">
-                <Tippy arrow={false} content="Items by customers">
+                <Tippy content="Items by Customers">
                   <button className="btn btn-sm btn-muted">
                     <FontAwesomeIcon id="sell" icon={faStore}></FontAwesomeIcon>
                   </button>
@@ -106,7 +111,7 @@ const Navbar = () => {
             {!currentUser.loggedIn && (
               <li>
                 <Link className="nav-link" to="/auth/signin">
-                  <Tippy arrow={false} content="Sign In">
+                  <Tippy content="Sign In">
                     <button className="btn btn-sm btn-muted">
                       <FontAwesomeIcon
                         id="signin"
@@ -120,7 +125,7 @@ const Navbar = () => {
             {!currentUser.loggedIn && (
               <li>
                 <Link className="nav-link" to="/auth/signup">
-                  <Tippy arrow={false} content="Sign Up">
+                  <Tippy content="Sign Up">
                     <button className="btn btn-sm btn-muted">
                       <FontAwesomeIcon
                         id="signup"
@@ -134,7 +139,7 @@ const Navbar = () => {
             {currentUser.loggedIn && (
               <li>
                 <Link className="nav-link" to="/profile">
-                  <Tippy arrow={false} content="Profile">
+                  <Tippy content="Profile">
                     <button className="btn btn-sm btn-muted">
                       <FontAwesomeIcon
                         id="profile"
@@ -148,7 +153,7 @@ const Navbar = () => {
             {currentUser.loggedIn && (
               <li>
                 <Link className="nav-link" to="." onClick={() => logOut()}>
-                  <Tippy arrow={false} content="Sign Out">
+                  <Tippy content="Sign Out">
                     <button className="btn btn-sm btn-muted">
                       <FontAwesomeIcon
                         id="signout"
