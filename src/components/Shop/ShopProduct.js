@@ -17,6 +17,7 @@ const ShopProduct = (props) => {
       <Card className="flex-column m-2" style={{ width: "18rem" }}>
         <Card.Img
           variant="top"
+          alt="item image"
           src={product.image}
           style={{ height: "14rem" }}
         />

@@ -6,8 +6,8 @@ import Loader from "../components/Loader/Loader";
 
 const Profile = () => {
   const emailRef = useRef();
-  const navigate = useNavigate();
   const passwordRef = useRef();
+  const navigate = useNavigate();
   const confirmPasswordRef = useRef();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
