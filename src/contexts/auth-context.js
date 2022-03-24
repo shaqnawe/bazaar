@@ -101,11 +101,11 @@ const AuthProvider = ({ children }) => {
   };
 
   const updateUserEmail = (email) => {
-    return updateEmail(auth.currentUser, email)
-  }
+    return updateEmail(auth.currentUser, email);
+  };
 
   const updateUserPassword = (password) => {
-    return updatePassword(auth.currentUser, password)
+    return updatePassword(auth.currentUser, password);
   };
 
   const forgotPassword = (email) => {
@@ -137,7 +137,6 @@ const AuthProvider = ({ children }) => {
         });
         setLoading(false);
       }
-      // console.log(currentUser)
     });
   }, [auth, db]);
 

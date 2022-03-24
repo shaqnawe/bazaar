@@ -7,6 +7,7 @@ import DataProvider from "./contexts/DataProvider";
 import { BrowserRouter } from "react-router-dom";
 import AuthProvider from "./contexts/auth-context";
 import { firebaseApp } from "./firebase/config";
+import { ChakraProvider } from "@chakra-ui/react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 ReactDOM.render(
@@ -14,7 +15,9 @@ ReactDOM.render(
     <BrowserRouter>
       <AuthProvider>
         <DataProvider>
-          <App />
+          <ChakraProvider>
+            <App />
+          </ChakraProvider>
         </DataProvider>
       </AuthProvider>
     </BrowserRouter>

@@ -1,6 +1,6 @@
-import { loadStripe } from "@stripe/stripe-js";
 import React, { Fragment } from "react";
-import { useData } from '../../contexts/DataProvider';
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements, CardElement, ElementsConsumer } from '@stripe/react-stripe-js';
 
 let stripePromise;
 const getStripe = () => {
@@ -11,7 +11,6 @@ const getStripe = () => {
 };
 
 const CheckoutForm = (props) => {
-  const { emptyCart } = useData();
   const cartItems = props.items;
 //   console.log(cartItems);
   let lineItems = cartItems.items.map((product) => ({

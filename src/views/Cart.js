@@ -1,12 +1,35 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { onSnapshot } from "firebase/firestore"; 
 import { useData } from "../contexts/DataProvider";
 import CartItem from "../components/Shop/CartItem";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
+import { useAuth } from '../contexts/auth-context';
+import { db } from "../firebase/config";
+import { collection } from "firebase/firestore";
 
 const Cart = () => {
+  const { currentUser } = useAuth();
   const { cart } = useData();
+  const [cartItems, setCartItems] = useState();
+  const cartCollectionRef = collection(db, "users", currentUser.id, "cart");
+
+  useEffect(() => {
+    console.log(cart, cartItems);
+    const unsubscribe = onSnapshot(cartCollectionRef, (snapshot) => {
+      setCartItems(
+        snapshot.docs.map((doc) => ({
+          id: doc.id,
+          data: doc.data(),
+        }))
+      );
+    });
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+  
 
   return (
     <Fragment>

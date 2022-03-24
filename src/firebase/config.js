@@ -2,6 +2,7 @@
 import { initializeApp } from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
+import { getFirestore } from "firebase/firestore";
 import "firebase/storage";
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -19,3 +20,4 @@ const firebaseConfig = {
 
 // Initialize Firebase
 export const firebaseApp = initializeApp(firebaseConfig);
+export const db = getFirestore(firebaseApp);

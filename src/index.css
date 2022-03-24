@@ -162,16 +162,16 @@ input[type="file"]::file-selector-button:hover {
   border: 2px solid #527658;
 }
 #image-preview {
-  height: 80%rem;
+  height: 80%;
   width: 80%;
-  background-size: cover !important;
+  background-size: contain !important;
   background-repeat: no-repeat;
   object-fit: cover;
   overflow: hidden;
 }
 #listing-header {
   font-family: "Quicksand", sans-serif;
-  font-weight: 300;
+  font-weight: bold;
 }
 .card {
   background-color: #60bfbf;

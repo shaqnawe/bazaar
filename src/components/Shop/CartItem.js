@@ -1,4 +1,8 @@
-import { faMinus, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
+import {
+  faTrash,
+  faMinusSquare,
+  faPlusSquare,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { Fragment, useState } from "react";
 import { useData } from "../../contexts/DataProvider";
@@ -57,23 +61,22 @@ const CartItem = (props) => {
           </div>
           <div className="col-4 col-sm-4 col-md-4">
             <div className="quantity">
-              <span>
-                <strong>{item.quantity}</strong>
-              </span>
               <span onClick={(e) => addProduct(e)}>
                 <FontAwesomeIcon
                   id="add-product"
                   className="btn btn-sm"
-                  icon={faPlus}
+                  icon={faPlusSquare}
                   onClick={() => setAdd("add")}
                 ></FontAwesomeIcon>
-                <i class="material-icons">add_shopping_cart</i>
+              </span>
+              <span>
+                <strong>{item.quantity}</strong>
               </span>
               <span onClick={(e) => removeProduct(e)}>
                 <FontAwesomeIcon
                   id="remove-product"
                   className="btn btn-sm"
-                  icon={faMinus}
+                  icon={faMinusSquare}
                   onClick={() => setRemove("remove")}
                 ></FontAwesomeIcon>
               </span>

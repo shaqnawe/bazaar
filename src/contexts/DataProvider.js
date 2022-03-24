@@ -1,28 +1,13 @@
-import React, {
-  useState,
-  useContext,
-  createContext,
-  useEffect,
-  useCallback,
-} from "react";
 import axios from "axios";
-import { useAuth } from "./auth-context";
 import {
-  doc,
-  getDocs,
-  getDoc,
-  getFirestore,
-  query,
-  collectionGroup,
-  collection,
-  setDoc,
-  setData,
-  orderBy,
-  onSnapshot,
-  deleteDoc,
-  updateDoc,
+  collection, deleteDoc, doc, getDoc, getDocs, setDoc, updateDoc
 } from "firebase/firestore";
+import React, {
+  createContext, useCallback, useContext, useEffect, useState
+} from "react";
 import { v4 as uuid } from "uuid";
+import { db } from '../firebase/config';
+import { useAuth } from "./auth-context";
 
 export const DataContext = createContext({
   //   token: "",
@@ -36,7 +21,8 @@ export function useData() {
 }
 
 const DataProvider = (props) => {
-  const db = getFirestore();
+  // const db = getFirestore();
+
   const { currentUser } = useAuth();
   const [products, setProducts] = useState([]);
   const [cart, setCart] = useState({
@@ -190,18 +176,6 @@ const DataProvider = (props) => {
       });
     });
   };
-
-  // useEffect(() => {
-  //   const cartColRef = collection(db, "users", currentUser.id, "cart");
-  //   const unsubscribe = onSnapshot(cartColRef, (snapshot) => {
-  //     let cart = [];
-  //     snapshot.docs.forEach((doc) => {
-  //       cart.push({ ...doc.data, id: doc.id });
-  //     });
-  //     console.log(cart);
-  //   });
-  //   return unsubscribe;
-  // }, []);
 
   // Query Cart collection to get each doc from cart and add it to a list (possibly orders list)
   // const cartCollection = await collection(
