@@ -1,12 +1,22 @@
 import axios from "axios";
 import {
-  collection, deleteDoc, doc, getDoc, getDocs, setDoc, updateDoc
+  collection,
+  deleteDoc,
+  doc,
+  getDoc,
+  getDocs,
+  setDoc,
+  updateDoc,
 } from "firebase/firestore";
 import React, {
-  createContext, useCallback, useContext, useEffect, useState
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
 } from "react";
 import { v4 as uuid } from "uuid";
-import { db } from '../firebase/config';
+import { db } from "../firebase/config";
 import { useAuth } from "./auth-context";
 
 export const DataContext = createContext({
@@ -83,7 +93,12 @@ const DataProvider = (props) => {
       const querySnapshot = await getDocs(userCartCollection);
       // console.log(querySnapshot)
       let productList = [];
-
+        setCart({
+          items: [],
+          quantity: 0,
+          subtotal: "0.00",
+          grandtotal: "0.00",
+        });
       querySnapshot.forEach((doc) => {
         axios
           .get(
@@ -268,12 +283,15 @@ const DataProvider = (props) => {
         );
         console.log(productRef);
         if (productRef) {
-          deleteDoc(productRef)
-            .then(() => console.log("Item removed from cart"))
+          getDoc(productRef)
+            .then(() => {
+              deleteDoc(productRef);
+              console.log("Item removed from cart");
+              getCart();
+            })
             .catch((error) => console.log(error.message));
         }
       }
-      getCart();
     },
     [db, currentUser.id]
   );
