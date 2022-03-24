@@ -1,5 +1,5 @@
 import { loadStripe } from "@stripe/stripe-js";
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment } from "react";
 import { useData } from '../../contexts/DataProvider';
 
 let stripePromise;

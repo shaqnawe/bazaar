@@ -55,7 +55,7 @@ const Profile = () => {
           <div className="row">
             <div className="col mt-2">
               <Link to="/profile/orders">
-                <button className="btn btn-info">Orders</button>
+                <button id="order-btn" className="btn btn-info">Orders</button>
               </Link>
             </div>
             <div className="col mt-2">

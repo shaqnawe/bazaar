@@ -8,7 +8,7 @@ const Success = () => {
     useEffect(() => {
       emptyCart();
       getCart();
-    })
+    },[])
     
     return (
       <Fragment>
@@ -17,4 +17,4 @@ const Success = () => {
       </Fragment>
     );
 };
-export default Success;
+export default Success; 

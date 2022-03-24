@@ -23,6 +23,7 @@
 #cart,
 #sell,
 #label,
+#user-listings,
 #signout,
 #signin,
 #signup,
@@ -34,9 +35,11 @@
 #cart:hover,
 #sell:hover,
 #label:hover,
+#user-listings:hover,
 #signout:hover,
 #signin:hover,
 #signup:hover,
-#profile:hover {
+#profile:hover,
+#user-listings:hover {
   color: #a30b2e;
 }

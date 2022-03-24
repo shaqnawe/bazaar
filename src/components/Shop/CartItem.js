@@ -1,6 +1,6 @@
-import React, { Fragment, useState } from "react";
-import { faTrash, faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faMinus, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React, { Fragment, useState } from "react";
 import { useData } from "../../contexts/DataProvider";
 
 const CartItem = (props) => {
@@ -67,6 +67,7 @@ const CartItem = (props) => {
                   icon={faPlus}
                   onClick={() => setAdd("add")}
                 ></FontAwesomeIcon>
+                <i class="material-icons">add_shopping_cart</i>
               </span>
               <span onClick={(e) => removeProduct(e)}>
                 <FontAwesomeIcon

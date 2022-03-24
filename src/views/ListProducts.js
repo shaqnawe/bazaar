@@ -1,14 +1,15 @@
-import React, { Fragment, useState, useEffect, useRef } from "react";
 import {
   getDownloadURL,
   getStorage,
   ref,
-  uploadBytesResumable,
+  uploadBytesResumable
 } from "firebase/storage";
-import { Alert, ProgressBar, Modal, Button } from "react-bootstrap";
+import React, { Fragment, useEffect, useRef, useState } from "react";
+import { Alert, Button, Modal, ProgressBar } from "react-bootstrap";
 import { useData } from "../contexts/DataProvider";
 
-const Sell = () => {
+const ListProducts = () => {
+  let imageLoc;
   const descRef = useRef();
   const nameRef = useRef();
   const typeRef = useRef();
@@ -17,17 +18,8 @@ const Sell = () => {
   const storage = getStorage();
   const [file, setFile] = useState();
   const [error, setError] = useState("");
-  const [productData, setProductData] = useState({
-      name: "",
-      description: "",
-      image: "",
-      category: "",
-      price: "",
-      type: ""
-  });
   const [progress, setProgress] = useState(0);
   const [loading, setLoading] = useState(false);
-  const [previewUrl, setPreviewUrl] = useState();
   const [imgLocation, setImgLocation] = useState();
   const { addProductInfo } = useData();
   //   Modal config
@@ -46,8 +38,8 @@ const Sell = () => {
     }
     const reader = new FileReader();
     reader.onload = () => {
-      setPreviewUrl(reader.result);
-      console.log(previewUrl)
+      imageLoc = reader.result;
+      console.log(imageLoc);
     };
     reader.readAsDataURL(file);
   }, [file]);
@@ -77,7 +69,7 @@ const Sell = () => {
       (err) => console.log(err),
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((url) =>
-        setImgLocation(url)
+          setImgLocation(url)
         );
         setLoading(false);
         // console.log(imgLocation)
@@ -92,23 +84,24 @@ const Sell = () => {
     const prodType = typeRef.current.value;
     const prodPrice = priceRef.current.value;
     const prodCat = categoryRef.current.value;
-    console.log(prodName, prodDesc, prodType, prodPrice, prodCat, imgLocation);
-    setProductData({
+    // console.log(prodName, prodDesc, prodType, prodPrice, prodCat, imgLocation);
+    let data = {
       name: prodName,
       description: prodDesc,
       image: imgLocation,
       category: prodCat,
       price: prodPrice,
       type: prodType,
-    });
+    };
+    console.log(data);
+    addProductInfo(data);
     document.getElementById("prod-info").reset();
-    addProductInfo(productData);
   };
-  
+
   return (
     <Fragment>
       <h1 id="sell-header" className="container mt-3">
-        Sell
+        List Item
       </h1>
       <hr />
       {loading && <ProgressBar variant="info" now={progress} />}
@@ -196,8 +189,8 @@ const Sell = () => {
             <Modal.Title>{file?.name}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            {previewUrl && (
-              <img id="image-preview " src={previewUrl} alt="preview" />
+            {imageLoc && (
+              <img id="image-preview " src={imageLoc} alt="preview" />
             )}
           </Modal.Body>
         </Modal>
@@ -205,4 +198,4 @@ const Sell = () => {
     </Fragment>
   );
 };
-export default Sell;
+export default ListProducts;

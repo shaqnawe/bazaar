@@ -22,12 +22,7 @@ import {
   deleteDoc,
   updateDoc,
 } from "firebase/firestore";
-import {
-  getDownloadURL,
-  getStorage,
-  ref,
-  uploadBytesResumable,
-} from "firebase/storage";
+import { v4 as uuid } from "uuid";
 
 export const DataContext = createContext({
   //   token: "",
@@ -43,7 +38,6 @@ export function useData() {
 const DataProvider = (props) => {
   const db = getFirestore();
   const { currentUser } = useAuth();
-  const [data, setData] = useState({});
   const [products, setProducts] = useState([]);
   const [cart, setCart] = useState({
     items: [],
@@ -59,34 +53,28 @@ const DataProvider = (props) => {
     tax: 0,
     grandtotal: 0,
   });
+  const [userItems, setUserItems] = useState({
+    items: [],
+    quantity: 0,
+    subtotal: 0,
+    tax: 0,
+    grandtotal: 0,
+  });
 
-  const addProductInfo = async (productData) => {
-    console.log(
-      productData.name,
-      productData.description,
-      productData.category,
-      productData.price,
-      productData.type,
-      productData.image
-    );
+  const addProductInfo = async (data) => {
+    const unique_id = uuid();
+    console.log(unique_id);
     if (currentUser.loggedIn) {
-      const productRef = doc(
-        db,
-        "users",
-        currentUser.id,
-        "products",
-        productData.name
-      );
+      const productRef = doc(db, "products", unique_id);
       const productDoc = await getDoc(productRef);
-
       if (!productDoc.exists()) {
         await setDoc(productRef, {
-          name: productData.name,
-          description: productData.description,
-          category: productData.category,
-          price: productData.price,
-          type: productData.type,
-          imgUrl: productData.image,
+          name: data.name,
+          description: data.description,
+          category: data.category,
+          price: data.price,
+          type: data.type,
+          imgUrl: data.image,
         });
       }
     }
@@ -171,6 +159,38 @@ const DataProvider = (props) => {
     [db, currentUser.id]
   );
 
+  const userListings = async () => {
+    const productCollection = await collection(db, "products");
+    const productSnapshot = await getDocs(productCollection);
+    // console.log(productCollection);
+    let productQuantity = 0;
+    let subtotal = 0;
+    let tax = 0;
+    let id = null;
+
+    let productList = [];
+
+    productSnapshot.forEach((doc) => {
+      console.log(doc.data());
+      id = doc.id;
+      productQuantity += doc.data().quantity;
+      productList.push({
+        ...doc.data(),
+        id: id,
+        quantity: doc.data().quantity,
+      });
+      subtotal += doc.data().price * doc.data().quantity;
+
+      setUserItems({
+        items: [...productList],
+        quantity: productQuantity,
+        subtotal: subtotal.toFixed(2),
+        tax: 2.5,
+        grandtotal: (subtotal + tax).toFixed(2),
+      });
+    });
+  };
+
   // useEffect(() => {
   //   const cartColRef = collection(db, "users", currentUser.id, "cart");
   //   const unsubscribe = onSnapshot(cartColRef, (snapshot) => {
@@ -197,11 +217,25 @@ const DataProvider = (props) => {
   //   });
   // for(let item of orderList) {
   //   console.log(item)
+  // const orderRef = collection(db,"users",currentUser.id,"orders",item.id)
+  // for(let i=0;i<orderList.length;i++){
+  //  if(!orderRef.exists()){
+  //    setDoc(orderRef, orderList[i].id)
+  // } else {
+  // updateDoc(orderRef,
+  //           { quantity: Number(orderList[i].quantity) },
+  //           { merge: true }
+  // )
+  // }
+  //
+  // }
+  //
   // }
 
   useEffect(() => {
     getCart();
     getOrders();
+    userListings();
   }, [currentUser.id]);
 
   const updateCart = useCallback(
@@ -260,7 +294,9 @@ const DataProvider = (props) => {
         );
         console.log(productRef);
         if (productRef) {
-          deleteDoc(productRef).then(console.log("Item removed from cart"));
+          deleteDoc(productRef)
+            .then(() => console.log("Item removed from cart"))
+            .catch((error) => console.log(error.message));
         }
       }
       getCart();
@@ -377,6 +413,7 @@ const DataProvider = (props) => {
     updateCart,
     deleteCartItem,
     addProductInfo,
+    userItems,
   };
 
   return (

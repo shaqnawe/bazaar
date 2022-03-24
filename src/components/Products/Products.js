@@ -61,7 +61,7 @@ const Products = (props) => {
           </label>
         </form>
       </div>
-      <div className="container d-flex justify-content-center mt-4">
+      <div className="container d-flex flex-wrap justify-content-center mt-4">
         {filteredCategoryProducts.length < 1
           ? products.map((product) => (
               <ShopProduct key={product.id} data={product} />

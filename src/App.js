@@ -8,7 +8,8 @@ import SignUp from "./views/SignUp";
 import Profile from "./views/Profile";
 import Shop from "./views/Shop";
 import Cart from "./views/Cart";
-import Sell from "./views/Sell";
+import UserListings from "./views/UserListings";
+import ListProducts from "./views/ListProducts";
 import Footer from "./components/Footer/Footer";
 import Checkout from "./views/Checkout";
 import Unauthorized from "./views/Unauthorized";
@@ -58,7 +59,18 @@ const App = () => {
             <Route exact path="/profile/orders" element={<Orders />} />
           )}
           {currentUser.loggedIn && (
-            <Route exact path="/sell" element={<Sell />} />
+            <Route
+              exact
+              path="/shop/list-products"
+              element={<ListProducts />}
+            />
+          )}
+          {currentUser.loggedIn && (
+            <Route
+              exact
+              path="/shop/user-listings"
+              element={<UserListings />}
+            />
           )}
           <Route
             exact

@@ -6,7 +6,7 @@ import { useData } from "../contexts/DataProvider";
 
 const Orders = () => {
   const { orders } = useData();
-  const message = "No previous orders... Nothing to see here 😵 ";
+  const message = "Nothing to see here 😵 ";
 
   return (
     <Fragment>

@@ -123,6 +123,10 @@ body {
   font-family: "Quicksand", sans-serif;
   font-weight: 300;
 }
+#order-btn {
+  font-family: "Quicksand", sans-serif;
+  font-weight: 300;
+}
 #product-form {
   align-items: center;
   justify-content: center;
@@ -159,4 +163,8 @@ input[type="file"]::file-selector-button:hover {
   background-repeat: no-repeat;
   object-fit: cover;
   overflow:hidden;
+}
+#listing-header {
+  font-family: "Quicksand", sans-serif;
+  font-weight: 300;
 }

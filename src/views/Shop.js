@@ -4,6 +4,7 @@ import { useData } from '../contexts/DataProvider';
 
 const Shop = () => {
     const { products } = useData();
+    console.log(products);
     return (
       <Fragment>
         <h1 id="shop-header">Shop</h1>
