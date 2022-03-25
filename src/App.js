@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-import { useAuth } from "./contexts/auth-context";
+import RequireAuth from "./components/Auth/Routing/RequireAuth";
 import Home from "./views/Home";
 import Navbar from "./components/Navbar/Navbar";
 import SignIn from "./views/SignIn";
@@ -21,7 +21,6 @@ import ResetPassword from "./components/Auth/ResetPassword";
 import "@stripe/stripe-js";
 
 const App = () => {
-  const { currentUser } = useAuth();
   return (
     <Fragment>
       <header>
@@ -30,58 +29,23 @@ const App = () => {
       <main className="container text-center">
         <Routes>
           <Route exact path="/" element={<Home />} />
-          {!currentUser.loggedIn && (
-            <Route exact path="/auth/signin" element={<SignIn />} />
-          )}
-          {!currentUser.loggedIn && (
-            <Route exact path="/auth/signup" element={<SignUp />} />
-          )}
-          {currentUser.loggedIn && (
-            <Route exact path="/profile" element={<Profile />} />
-          )}
-          {!currentUser.loggedIn && (
-            <Route
-              exact
-              path="/profile"
-              element={<Navigate to="/auth/signin" />}
-            />
-          )}
-          {currentUser.loggedIn && (
-            <Route exact path="/shop" element={<Shop />} />
-          )}
-          {currentUser.loggedIn && (
-            <Route exact path="/shop/cart" element={<Cart />} />
-          )}
-          {currentUser.loggedIn && (
-            <Route exact path="/shop/checkout" element={<Checkout />} />
-          )}
-          {currentUser.loggedIn && (
-            <Route exact path="/profile/orders" element={<Orders />} />
-          )}
-          {currentUser.loggedIn && (
-            <Route
-              exact
-              path="/shop/list-products"
-              element={<ListProducts />}
-            />
-          )}
-          {currentUser.loggedIn && (
-            <Route
-              exact
-              path="/shop/user-listings"
-              element={<UserListings />}
-            />
-          )}
-          <Route
-            exact
-            path="/auth/forgot-password"
-            element={<ForgotPassword />}
-          />
-          <Route exact path="auth/reset-password" element={<ResetPassword />} />
-          <Route exact path="/success" element={<Success />} />
-          <Route exact path="/cancel" element={<Cancel />} />
+          <Route exact path="/auth/signin" element={<SignIn />} />
+          <Route exact path="/auth/signup" element={<SignUp />} />
           <Route exact path="/unauthorized" element={<Unauthorized />} />
           <Route exact path="*" element={<Navigate to="/unauthorized" />} />
+          <Route exact path="auth/reset-password" element={<ResetPassword />} />
+          <Route exact path="/auth/forgot-password" element={<ForgotPassword />} />
+          <Route element={<RequireAuth />}>
+            <Route exact path="/profile" element={<Profile />} />
+            <Route exact path="/shop" element={<Shop />} />
+            <Route exact path="/shop/cart" element={<Cart />} />
+            <Route exact path="/shop/checkout" element={<Checkout />} />
+            <Route exact path="/profile/orders" element={<Orders />} />
+            <Route exact path="/shop/list-products" element={<ListProducts />} />
+            <Route exact path="/shop/user-listings" element={<UserListings />} />
+            <Route exact path="/success" element={<Success />} />
+            <Route exact path="/cancel" element={<Cancel />} />
+          </Route>
         </Routes>
       </main>
       <footer>

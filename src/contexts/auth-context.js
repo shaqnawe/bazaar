@@ -141,6 +141,7 @@ const AuthProvider = ({ children }) => {
   }, [auth, db]);
 
   const values = {
+    auth,
     currentUser,
     signUp,
     signIn,
