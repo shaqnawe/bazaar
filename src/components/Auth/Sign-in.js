@@ -1,14 +1,14 @@
 import React, { Fragment, useRef, useState } from "react";
-import { Form, Button, Card, Alert } from "react-bootstrap";
-import { useAuth } from "../../contexts/auth-context";
+import { Alert, Button, Card, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../contexts/auth-context";
 import Loader from "../Loader/Loader";
 import "./Auth.css";
 
 const Signin = () => {
   const emailRef = useRef();
   const passwordRef = useRef();
-  const { currentUser, signIn, signInWithGoogle } = useAuth();
+  const { signIn, signInWithGoogle } = useAuth();
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);

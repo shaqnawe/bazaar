@@ -1,11 +1,11 @@
-import React, { Fragment } from 'react';
-import Signin from '../components/Auth/Sign-in';
+import React from "react";
+import Signin from "../components/Auth/Sign-in";
 
 const SignIn = () => {
-    return(
-        <Fragment>
-            <Signin />
-        </Fragment>
-    );
+  return (
+    <div className="container mt-4">
+      <Signin />
+    </div>
+  );
 };
 export default SignIn;

@@ -1,9 +1,9 @@
-import './Auth.css';
-import Loader from "../Loader/Loader";
+import React, { Fragment, useRef, useState } from "react";
+import { Alert, Button, Card, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/auth-context";
-import React, { Fragment, useRef, useState } from "react";
-import { Button, Card, Form, Alert } from "react-bootstrap";
+import Loader from "../Loader/Loader";
+import './Auth.css';
 
 const Signup = () => {
   const userFNameRef = useRef();
@@ -11,7 +11,7 @@ const Signup = () => {
   const emailRef = useRef();
   const passwordRef = useRef();
   const confirmPasswordRef = useRef();
-  const { currentUser, signUp } = useAuth();
+  const { signUp } = useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
