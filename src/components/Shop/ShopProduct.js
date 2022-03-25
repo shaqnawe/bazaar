@@ -21,7 +21,7 @@ const ShopProduct = (props) => {
           variant="top"
           alt="item image"
           src={product.image}
-          style={{ height: "14rem" }}
+          style={{ height: "14rem", objectFit: "cover" }}
         />
         <Card.Body>
           <Card.Title>{product.name}</Card.Title>
