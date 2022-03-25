@@ -1,5 +1,6 @@
 import Loader from "../Loader/Loader";
-import { Form, Card, Alert } from "react-bootstrap";
+import { Heading } from "@chakra-ui/react";
+import { Form, Card, Alert, Button } from "react-bootstrap";
 import { useAuth } from "../../contexts/auth-context";
 import React, { Fragment, useState, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -24,7 +25,7 @@ const ResetPassword = () => {
     e.preventDefault();
     const enteredPass = passwordRef.current.value;
     try {
-        setLoading(true);
+      setLoading(true);
       await resetPassword(query.get("oobCode"), enteredPass).then(
         (response) => {
           setMessage("Password has been updated.");
@@ -36,32 +37,41 @@ const ResetPassword = () => {
       setError(error.message);
       console.log(error.message);
     }
-    setLoading(false)
+    setLoading(false);
   };
 
   return (
     <Fragment>
-      <Card>
-        <Card.Body>
-          <h2 className="text-center">Reset password</h2>
-          {loading && <Loader />}
-          {error && <Alert variant="danger">{error}</Alert>}
-          {message && <Alert variant="success">{message}</Alert>}
-          <Form
-            onSubmit={async (e) => {
-              submitHandler(e);
-            }}
-          >
-            <Form.Group id="password">
-              <Form.Label>Password</Form.Label>
-              <Form.Control type="password" ref={passwordRef} required />
-            </Form.Group>
-            <button className="btn btn-outline-primary mt-4" type="submit">
-              Reset password
-            </button>
-          </Form>
-        </Card.Body>
-      </Card>
+      <div className="d-flex justify-content-center mt-5">
+        <Card className="bg-dark text-warning w-25">
+          <Card.Body>
+            <Heading>
+              <h1 className="text-center mb-4">Reset password</h1>
+            </Heading>
+            {loading && <Loader />}
+            {error && <Alert variant="danger">{error}</Alert>}
+            {message && <Alert variant="success">{message}</Alert>}
+            <Form
+              onSubmit={async (e) => {
+                submitHandler(e);
+              }}
+            >
+              <Form.Group id="password">
+                <Form.Label>Password</Form.Label>
+                <Form.Control
+                  className="mt-2"
+                  type="password"
+                  ref={passwordRef}
+                  required
+                />
+              </Form.Group>
+              <Button className="btn-dark text-warning mt-2" type="submit">
+                Reset password
+              </Button>
+            </Form>
+          </Card.Body>
+        </Card>
+      </div>
     </Fragment>
   );
 };

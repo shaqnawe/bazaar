@@ -1,13 +1,13 @@
 import "./Auth.css";
 import Loader from "../Loader/Loader";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/auth-context";
 import React, { Fragment, useRef, useState } from "react";
 import { Form, Button, Card, Alert } from "react-bootstrap";
+import { Heading } from "@chakra-ui/react";
 
 const ForgotPassword = () => {
   const emailRef = useRef();
-  const navigate = useNavigate();
   const { forgotPassword } = useAuth();
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
@@ -32,31 +32,50 @@ const ForgotPassword = () => {
 
   return (
     <Fragment>
-      <Card>
-        <Card.Body>
-          <h2 className="test-center mb-4">Password Reset</h2>
-          {loading && <Loader />}
-          {error && <Alert variant="danger">{error}</Alert>}
-          {message && <Alert variant="success">{message}</Alert>}
-          <Form onSubmit={(e) => submitHandler(e)}>
-            <Form.Group id="email">
-              <Form.Label>Email</Form.Label>
-              <Form.Control
-                className="mt-2"
-                type="email"
-                ref={emailRef}
-                required
-              />
-            </Form.Group>
-            <Button disabled={loading} className="w-30 mt-4" type="submit">
-              Reset Password
-            </Button>
-          </Form>
-          <Link to="/auth/signin">Login</Link>
-        </Card.Body>
-      </Card>
-      <div className="w-100 text-center mt-2">
-        Don't have an account?<Link to="/auth/signup">Register</Link>
+      <div className="container mt-5">
+        <div className="d-flex justify-content-center">
+          <Card className="bg-dark text-warning w-25">
+            <Card.Body>
+              <Heading>
+                <h1 className="test-center mb-4">Reset Password</h1>
+              </Heading>
+              {loading && <Loader />}
+              {error && <Alert variant="danger">{error}</Alert>}
+              {message && <Alert variant="success">{message}</Alert>}
+              <Form onSubmit={(e) => submitHandler(e)}>
+                <Form.Group id="email">
+                  <Form.Label>Email</Form.Label>
+                  <Form.Control
+                    className="mt-2"
+                    type="email"
+                    ref={emailRef}
+                    required
+                  />
+                </Form.Group>
+                <Button
+                  className="btn-dark text-warning mt-2"
+                  disabled={loading}
+                  type="submit"
+                >
+                  Reset Password
+                </Button>
+              </Form>
+              <Link to="/auth/signin">
+                <button className="btn btn-muted text-warning">Login</button>
+              </Link>
+            </Card.Body>
+          </Card>
+        </div>
+        <div className="w-100 text-center mt-2">
+          <button id="no-account" className="btn btn-muted">
+            Don't have an account?
+          </button>
+          <Link to="/auth/signup">
+            <button id="register" className="btn btn-muted">
+              Register
+            </button>
+          </Link>
+        </div>
       </div>
     </Fragment>
   );

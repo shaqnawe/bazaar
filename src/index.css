@@ -60,9 +60,27 @@ body {
 #register:hover {
   text-decoration: none;
 }
-#signin {
-  
+#login{
   font-family: "Quicksand", sans-serif;
+  color:#FFC124;
+}
+#have-account {
+  font-family: "Quicksand", sans-serif;
+  cursor: text;
+}
+#no-account {
+  font-family: "Quicksand", sans-serif;
+  cursor: text;
+}
+#signup {
+  font-family: "Quicksand", sans-serif;
+}
+#signin {
+  font-family: "Quicksand", sans-serif;
+}
+#register {
+  font-family: "Quicksand", sans-serif;
+  color:#FFC124;
 }
 #shop-header {
   font-family: "Quicksand", sans-serif;

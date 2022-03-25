@@ -9,10 +9,10 @@ import { Heading } from "@chakra-ui/react";
 const Signin = () => {
   const emailRef = useRef();
   const passwordRef = useRef();
-  const { signIn, signInWithGoogle } = useAuth();
-  const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const { signIn, signInWithGoogle } = useAuth();
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -34,7 +34,7 @@ const Signin = () => {
 
   return (
     <Fragment>
-      <div className="d-flex justify-content-center">
+      <div className="d-flex justify-content-center mt-5">
         {loading ? (
           <Loader />
         ) : (
@@ -91,7 +91,9 @@ const Signin = () => {
         Sign In with Google
       </Button>
       <div className="text-center mt-2">
-        <button className="btn btn-muted">Don't have an account?</button>
+        <button id="no-account" className="btn btn-muted">
+          Don't have an account?
+        </button>
         <Link to="/auth/signup">
           <button className="btn btn-muted" id="register">
             Register
