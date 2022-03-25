@@ -1,6 +1,7 @@
 import React, { Fragment } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements, CardElement, ElementsConsumer } from '@stripe/react-stripe-js';
+import { useData } from '../../contexts/DataProvider';
 
 let stripePromise;
 const getStripe = () => {
@@ -11,6 +12,7 @@ const getStripe = () => {
 };
 
 const CheckoutForm = (props) => {
+  const { copyCart } = useData();
   const cartItems = props.items;
 //   console.log(cartItems);
   let lineItems = cartItems.items.map((product) => ({
@@ -19,7 +21,12 @@ const CheckoutForm = (props) => {
     id: product.id,
   }));
   // console.log(lineItems)
-
+  // Get all cart items and pass them to copyCart function to
+  // make a new collection or add quantity to existing refrence
+  for (let item of cartItems.items) {
+    console.log(item.id);
+    copyCart(item);
+  }
   const checkoutOptions = {
     lineItems: lineItems.map(item => {
         return {

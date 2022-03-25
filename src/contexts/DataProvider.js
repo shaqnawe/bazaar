@@ -31,8 +31,6 @@ export function useData() {
 }
 
 const DataProvider = (props) => {
-  // const db = getFirestore();
-
   const { currentUser } = useAuth();
   const [products, setProducts] = useState([]);
   const [cart, setCart] = useState({
@@ -93,12 +91,12 @@ const DataProvider = (props) => {
       const querySnapshot = await getDocs(userCartCollection);
       // console.log(querySnapshot)
       let productList = [];
-        setCart({
-          items: [],
-          quantity: 0,
-          subtotal: "0.00",
-          grandtotal: "0.00",
-        });
+      setCart({
+        items: [],
+        quantity: 0,
+        subtotal: "0.00",
+        grandtotal: "0.00",
+      });
       querySnapshot.forEach((doc) => {
         axios
           .get(
@@ -191,35 +189,32 @@ const DataProvider = (props) => {
       });
     });
   };
-
-  // Query Cart collection to get each doc from cart and add it to a list (possibly orders list)
-  // const cartCollection = await collection(
-  //   db,
-  //   "users",
-  //   currentUser.id,
-  //   "cart"
-  // );
-  // const cartQuerySnapshot = await getDocs(cartCollection);
-  // const orderList = [];
-  //   cartQuerySnapshot.forEach((doc) => {
-  //     orderList.push( { ...doc.data(), id: doc.id } )
-  //   });
-  // for(let item of orderList) {
-  //   console.log(item)
-  // const orderRef = collection(db,"users",currentUser.id,"orders",item.id)
-  // for(let i=0;i<orderList.length;i++){
-  //  if(!orderRef.exists()){
-  //    setDoc(orderRef, orderList[i].id)
-  // } else {
-  // updateDoc(orderRef,
-  //           { quantity: Number(orderList[i].quantity) },
-  //           { merge: true }
-  // )
-  // }
-  //
-  // }
-  //
-  // }
+  const copyCart = useCallback(
+    async (product) => {
+      const orderCollectionRef = doc(
+        db,
+        "users",
+        currentUser.id,
+        "orders",
+        product.id
+      );
+      const orderRef = await getDoc(orderCollectionRef);
+      if (!orderRef.exists()) {
+        await setDoc(orderCollectionRef, { quantity: 1 });
+      } else {
+        // increment the product's quantity by 1
+        let quantity = product.quantity;
+        // add update cart functionality
+        await updateDoc(
+          orderCollectionRef,
+          { quantity: Number(quantity) },
+          { merge: true }
+        );
+      }
+      getOrders();
+    },
+    [db, currentUser.id]
+  );
 
   useEffect(() => {
     getCart();
@@ -351,33 +346,33 @@ const DataProvider = (props) => {
     }
   };
 
-  const orderHistory = useCallback(
-    async (productData) => {
-      const orderRef = doc(
-        db,
-        "users",
-        currentUser.id,
-        "orders",
-        productData.id
-      );
-      const orderDoc = await getDoc(orderRef);
-      if (!orderDoc.exists()) {
-        await setDoc(orderRef, { quantity: 1 });
-      } else {
-        // increment the product's quantity by 1
-        let quantity = orderDoc.data().quantity;
-        quantity++;
-        // add update cart functionality
-        await updateDoc(
-          orderRef,
-          { quantity: Number(quantity) },
-          { merge: true }
-        );
-      }
-      getOrders();
-    },
-    [db, currentUser.id]
-  );
+  // const orderHistory = useCallback(
+  //   async (productData) => {
+  //     const orderRef = doc(
+  //       db,
+  //       "users",
+  //       currentUser.id,
+  //       "orders",
+  //       productData.id
+  //     );
+  //     const orderDoc = await getDoc(orderRef);
+  //     if (!orderDoc.exists()) {
+  //       await setDoc(orderRef, { quantity: 1 });
+  //     } else {
+  //       // increment the product's quantity by 1
+  //       let quantity = orderDoc.data().quantity;
+  //       quantity++;
+  //       // add update cart functionality
+  //       await updateDoc(
+  //         orderRef,
+  //         { quantity: Number(quantity) },
+  //         { merge: true }
+  //       );
+  //     }
+  //     getOrders();
+  //   },
+  //   [db, currentUser.id]
+  // );
 
   const getproducts = async () => {
     await axios
@@ -398,8 +393,8 @@ const DataProvider = (props) => {
     cart: cart,
     addToCart,
     orders,
+    copyCart,
     getOrders,
-    orderHistory,
     emptyCart,
     getCart,
     updateCart,

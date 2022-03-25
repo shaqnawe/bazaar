@@ -4,12 +4,12 @@ import { ListGroup, ListGroupItem } from "react-bootstrap";
 import Card from "react-bootstrap/Card";
 
 const UserItem = (props) => {
-  const { addToCart, orderHistory } = useData();
+  const { addToCart, copyCart } = useData();
   const product = props.data;
 
   // Function for adding to cart
   const addToCartHandler = (product) => {
-    orderHistory(product);
+    copyCart(product);
     addToCart(product);
   };
   return (
