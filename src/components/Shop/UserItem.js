@@ -14,7 +14,7 @@ const UserItem = (props) => {
   };
   return (
     <Fragment>
-      <Card className="flex-column m-2" style={{ width: "18rem" }}>
+      <Card className="flex-column m-2 bg-dark text-light" style={{ width: "18rem" }}>
         <Card.Img
           variant="top"
           src={product.imgUrl}
@@ -25,7 +25,7 @@ const UserItem = (props) => {
           <Card.Text>{product.description}</Card.Text>
         </Card.Body>
         <ListGroup className="list-group-flush">
-          <ListGroupItem>{`$${product.price}`}</ListGroupItem>
+          <ListGroupItem className="bg-dark text-light">{`$${product.price}`}</ListGroupItem>
         </ListGroup>
         <button
           className="btn btn-success text-warning"
