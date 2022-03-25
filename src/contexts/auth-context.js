@@ -24,6 +24,7 @@ export function useAuth() {
 }
 
 const AuthProvider = ({ children }) => {
+  let user;
   const auth = getAuth();
   const db = getFirestore();
   const navigate = useNavigate();
@@ -35,7 +36,7 @@ const AuthProvider = ({ children }) => {
     return createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in
-        const user = userCredential.user;
+        user = userCredential.user;
         setCurrentUser({ loggedIn: true });
         console.log("Successful signup");
         navigate("/");
@@ -52,7 +53,7 @@ const AuthProvider = ({ children }) => {
         signInWithEmailAndPassword(auth, email, password).then(
           (userCredential) => {
             // Signed in
-            const user = userCredential.user;
+            user = userCredential.user;
             console.log("Signed in successfully!");
             navigate("/");
           }
@@ -73,7 +74,7 @@ const AuthProvider = ({ children }) => {
           const credential = GoogleAuthProvider.credentialFromResult(result);
           const token = credential.accessToken;
           // The signed-in user info.
-          const user = result.user;
+          user = result.user;
           navigate("/");
         });
       })
