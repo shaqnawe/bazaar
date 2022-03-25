@@ -1,15 +1,19 @@
 import React, { Fragment } from 'react';
 import { useData } from '../contexts/DataProvider';
-import ShopProduct from '../components/Shop/ShopProduct';
 import UserItem from '../components/Shop/UserItem';
+import { Heading } from '@chakra-ui/react';
 
 const UserListings = () => {
     const { userItems } = useData();
-    console.log(userItems.items)
+    // console.log(userItems.items)
     const products = userItems.items
     return (
       <Fragment>
-        <h1 className="container mt-4" id="listing-header">User Listings</h1>
+        <Heading mt={4}>
+          <span className="container mt-4" id="listing-header">
+            User Listings
+          </span>
+        </Heading>
         <div className="d-flex justify-content-center mt-4">
           {products.map((item) => (
             <UserItem key={item.id} data={item} />

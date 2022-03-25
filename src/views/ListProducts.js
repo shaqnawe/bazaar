@@ -7,6 +7,7 @@ import {
 import React, { Fragment, useEffect, useRef, useState } from "react";
 import { Alert, Button, Modal, ProgressBar } from "react-bootstrap";
 import { useData } from "../contexts/DataProvider";
+import { Heading } from '@chakra-ui/react';
 
 const ListProducts = () => {
   let imageLoc;
@@ -100,10 +101,11 @@ const ListProducts = () => {
 
   return (
     <Fragment>
-      <h1 id="sell-header" className="container mt-3">
-        List Item
-      </h1>
-      <hr />
+      <Heading mt={4}>
+        <span id="sell-header" className="container mt-3">
+          List Item
+        </span>
+      </Heading>
       {loading && <ProgressBar variant="info" now={progress} />}
       {error && <Alert variant="danger">{error}</Alert>}
       <div className="d-flex justify-content-center mb-4">

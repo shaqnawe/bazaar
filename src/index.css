@@ -62,7 +62,7 @@ body {
 }
 #shop-header {
   font-family: "Quicksand", sans-serif;
-  font-weight: 300;
+  font-weight: bold;
 }
 #err {
   font-family: "Quicksand", sans-serif;
@@ -73,7 +73,7 @@ body {
 }
 #dasboard {
   font-family: "Quicksand", sans-serif;
-  font-weight: 300;
+  font-weight: bold;
 }
 #dasboard-update {
   font-weight: 300;
@@ -122,7 +122,7 @@ body {
 }
 #sell-header {
   font-family: "Quicksand", sans-serif;
-  font-weight: 300;
+  font-weight: bold;
 }
 #order-btn {
   font-family: "Quicksand", sans-serif;

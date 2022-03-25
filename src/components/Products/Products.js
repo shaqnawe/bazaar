@@ -29,7 +29,7 @@ const Products = (props) => {
   const sortProductsByCategory = (e) => {
     const productCategoryList = [];
     const selectedCategory = e.target.value;
-    console.log(selectedCategory);
+    // console.log(selectedCategory);
     for (const product of products) {
       if (product.category === selectedCategory) {
         productCategoryList.push(product);

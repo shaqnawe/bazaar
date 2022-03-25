@@ -172,7 +172,7 @@ const DataProvider = (props) => {
     let productList = [];
 
     productSnapshot.forEach((doc) => {
-      console.log(doc.data());
+      // console.log(doc.data());
       id = doc.id;
       productQuantity += doc.data().quantity;
       productList.push({
