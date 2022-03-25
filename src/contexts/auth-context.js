@@ -49,11 +49,14 @@ const AuthProvider = ({ children }) => {
   const signIn = (email, password) => {
     return setPersistence(auth, browserLocalPersistence)
       .then(() => {
-        signInWithEmailAndPassword(auth, email, password).then(() => {
-          // Signed in
-          console.log("Signed in successfully!");
-          navigate("/");
-        });
+        signInWithEmailAndPassword(auth, email, password).then(
+          (userCredential) => {
+            // Signed in
+            const user = userCredential.user;
+            console.log("Signed in successfully!");
+            navigate("/");
+          }
+        );
       })
       .catch((error) => {
         const errorCode = error.code;
