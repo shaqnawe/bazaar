@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/auth-context";
 import Loader from "../Loader/Loader";
 import "./Auth.css";
+import { Heading } from '@chakra-ui/react';
 
 const Signin = () => {
   const emailRef = useRef();
@@ -33,42 +34,67 @@ const Signin = () => {
 
   return (
     <Fragment>
-      {loading ? (
-        <Loader />
-      ) : (
-        <Card>
-          <Card.Body>
-            <h2 className="test-center mb-4">Sign In</h2>
-            {loading && <Loader />}
-            {error && <Alert variant="danger">{error}</Alert>}
-            {message && <Alert variant="success">{message}</Alert>}
-            <Form onSubmit={(e) => submitHandler(e)}>
-              <Form.Group id="email">
-                <Form.Label>Email</Form.Label>
-                <Form.Control type="email" ref={emailRef} required />
-              </Form.Group>
-              <Form.Group id="password">
-                <Form.Label>Password</Form.Label>
-                <Form.Control type="password" ref={passwordRef} required />
-              </Form.Group>
-              <Button disabled={loading} className="w-100 mt-4" type="submit">
-                Sign In
-              </Button>
-            </Form>
-          </Card.Body>
-          <div className="w-100 text-center mb-3">
-            <Link to="/auth/forgot-password">Forgot Password?</Link>
-          </div>
-        </Card>
-      )}
-      <button
+      <div className="d-flex justify-content-center">
+        {loading ? (
+          <Loader />
+        ) : (
+          <Card id="signin" className="bg-dark text-warning w-25">
+            <Card.Body>
+              <Heading>
+                <h1 className="text-center mb-4">Sign In</h1>
+              </Heading>
+              {loading && <Loader />}
+              {error && <Alert variant="danger">{error}</Alert>}
+              {message && <Alert variant="success">{message}</Alert>}
+              <Form onSubmit={(e) => submitHandler(e)}>
+                <Form.Group id="email">
+                  <Form.Label>Email</Form.Label>
+                  <Form.Control
+                    className="w-100"
+                    type="email"
+                    ref={emailRef}
+                    required
+                  />
+                </Form.Group>
+                <Form.Group id="password">
+                  <Form.Label>Password</Form.Label>
+                  <Form.Control
+                    className="w-100"
+                    type="password"
+                    ref={passwordRef}
+                    required
+                  />
+                </Form.Group>
+                <Button
+                  disabled={loading}
+                  className="btn-dark text-warning mt-4"
+                  type="submit"
+                >
+                  Sign In
+                </Button>
+              </Form>
+            </Card.Body>
+            <div className="w-100 text-center mb-3">
+              <Link to="/auth/forgot-password">
+                <button className="btn btn-muted text-warning">Forgot Password?</button>
+              </Link>
+            </div>
+          </Card>
+        )}
+      </div>
+      <Button
         onClick={() => signInWithGoogle()}
-        className="btn btn-outline-primary m-3"
+        className="btn-dark text-warning m-3"
       >
         Sign In with Google
-      </button>
+      </Button>
       <div className="w-100 text-center mt-2">
-        Don't have an account?<Link to="/auth/signup">Register</Link>
+        Don't have an account?
+        <Link to="/auth/signup">
+          <button className="btn btn-muted" id="register">
+            Register
+          </button>
+        </Link>
       </div>
     </Fragment>
   );

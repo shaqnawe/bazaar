@@ -54,6 +54,16 @@ body {
   font-family: "Quicksand", sans-serif;
   font-weight: 300;
 }
+#register {
+  color: #FFC124;
+}
+#register:hover {
+  text-decoration: none;
+}
+#signin {
+  
+  font-family: "Quicksand", sans-serif;
+}
 #shop-header {
   font-family: "Quicksand", sans-serif;
   font-weight: bold;
@@ -132,7 +142,6 @@ body {
 #orders-btn:hover {
   color:#dcb83e;
 }
-
 #product-form {
   align-items: center;
   justify-content: center;
