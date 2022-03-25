@@ -8,7 +8,9 @@ const Cancel = () => {
       <Heading m={4}>
         <span id="payment-cancel">The Payment was cancelled.</span>
       </Heading>
-      <Link to="/profile">Profile</Link>
+      <Link to="/profile">
+        <button className="btn btn-muted text-warning">Profile</button>
+      </Link>
     </Fragment>
   );
 };

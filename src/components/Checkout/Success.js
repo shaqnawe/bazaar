@@ -15,7 +15,9 @@ const Success = () => {
       <Heading m={4}>
         <span id="payment-success">The Payment was successful</span>
       </Heading>
-      <Link to="/profile">Profile</Link>
+      <Link to="/profile">
+        <button className="btn btn-muted text-warning">Profile</button>
+      </Link>
     </Fragment>
   );
 };
