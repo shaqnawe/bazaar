@@ -76,7 +76,7 @@ body {
   font-weight: bold;
 }
 #dasboard-update {
-  font-weight: 300;
+  font-weight: bold;
 }
 #update-info {
   font-family: "Quicksand", sans-serif;
@@ -175,4 +175,12 @@ input[type="file"]::file-selector-button:hover {
 }
 .card {
   background-color: #60bfbf;
+}
+#payment-cancel {
+  font-family: "Quicksand", sans-serif;
+  font-weight: bold;
+}
+#payment-success {
+  font-family: "Quicksand", sans-serif;
+  font-weight: bold;
 }

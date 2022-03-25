@@ -1,6 +1,7 @@
 import React, { Fragment, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useData } from "../../contexts/DataProvider";
+import { Heading } from "@chakra-ui/react";
 
 const Success = () => {
   const { emptyCart, getCart } = useData();
@@ -11,7 +12,9 @@ const Success = () => {
 
   return (
     <Fragment>
-      <h1>The Payment was successful</h1>
+      <Heading m={4}>
+        <span id="payment-success">The Payment was successful</span>
+      </Heading>
       <Link to="/profile">Profile</Link>
     </Fragment>
   );
