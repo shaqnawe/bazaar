@@ -137,6 +137,7 @@ const AuthProvider = ({ children }) => {
         setCurrentUser({
           id: user.uid,
           email: user.email,
+          image: user.photoURL,
           loggedIn: true,
         });
         setLoading(false);

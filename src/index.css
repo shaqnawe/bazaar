@@ -2,12 +2,6 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
-/* .backdrop {
-  background-image: url('../src/static/images/bazaar.jpeg');
-  background-size: cover;
-  background-repeat: no-repeat;
-  height: 85vh;
-} */
 main {
   overflow: auto;
   height: 100vh;
@@ -98,21 +92,21 @@ body {
 }
 #checkout-button {
   color: #181818;
-  background-color: #b1dc3e;
+  background-color: #dcb83e;
 }
 #cart-icon {
-  color: #60bfbf;
+  color: #dcb83e;
 }
 #cart-icon:hover {
   cursor: pointer;
 }
 #card-header {
-  color: #60bfbf;
+  color: #dcb83e;
   background-color: #181818;
 }
 #ctn-shop {
   color: #181818;
-  background-color: #60bfbf;
+  background-color: #dcb83e;
 }
 #add-product:hover {
   color: #b1dc3e;
@@ -124,10 +118,21 @@ body {
   font-family: "Quicksand", sans-serif;
   font-weight: bold;
 }
-#order-btn {
-  font-family: "Quicksand", sans-serif;
-  font-weight: 300;
+#user {
+  height: 8rem;
 }
+#avatar {
+  height: 8rem;
+  border-radius: 50%;
+}
+#history-header {
+  font-family: "Quicksand", sans-serif;
+  font-weight: bold;
+}
+#orders-btn:hover {
+  color:#dcb83e;
+}
+
 #product-form {
   align-items: center;
   justify-content: center;
@@ -164,7 +169,7 @@ input[type="file"]::file-selector-button:hover {
 #image-preview {
   height: 80%;
   width: 80%;
-  background-size: contain !important;
+  background-size: contain;
   background-repeat: no-repeat;
   object-fit: cover;
   overflow: hidden;
@@ -175,6 +180,22 @@ input[type="file"]::file-selector-button:hover {
 }
 .card {
   background-color: #60bfbf;
+}
+#stripe-checkout {
+  font-family: "Quicksand", sans-serif;
+  font-weight: bold;
+}
+#checkout-btn {
+  font-family: "Quicksand", sans-serif;
+  color: #181818;
+}
+#checkout-btn:hover {
+  font-family: "Quicksand", sans-serif;
+  color: #dcb83e;
+}
+#credit-card {
+  height: 15rem;
+  width: 20rem;
 }
 #payment-cancel {
   font-family: "Quicksand", sans-serif;

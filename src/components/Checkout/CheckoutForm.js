@@ -1,7 +1,11 @@
 import React, { Fragment } from "react";
 import { loadStripe } from "@stripe/stripe-js";
-import { Elements, CardElement, ElementsConsumer } from '@stripe/react-stripe-js';
-import { useData } from '../../contexts/DataProvider';
+import { useData } from "../../contexts/DataProvider";
+import { Heading } from "@chakra-ui/react";
+import Tippy from "@tippy.js/react";
+import "tippy.js/dist/tippy.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCreditCard } from "@fortawesome/free-solid-svg-icons";
 
 let stripePromise;
 const getStripe = () => {
@@ -14,7 +18,7 @@ const getStripe = () => {
 const CheckoutForm = (props) => {
   const { copyCart } = useData();
   const cartItems = props.items;
-//   console.log(cartItems);
+  //   console.log(cartItems);
   let lineItems = cartItems.items.map((product) => ({
     price: product.priceId,
     quantity: product.quantity,
@@ -28,11 +32,11 @@ const CheckoutForm = (props) => {
     copyCart(item);
   }
   const checkoutOptions = {
-    lineItems: lineItems.map(item => {
-        return {
-          price: item.price,
-          quantity: item.quantity
-        };
+    lineItems: lineItems.map((item) => {
+      return {
+        price: item.price,
+        quantity: item.quantity,
+      };
     }),
     mode: "payment",
     successUrl: `${window.location.origin}/success`,
@@ -45,30 +49,30 @@ const CheckoutForm = (props) => {
     const { error } = await stripe.redirectToCheckout(checkoutOptions);
     console.log("Stripe checkout error", error);
   };
-  
+
   return (
-    <Fragment>
-      <h4>Checkout</h4>
-      <div className="checkout">
-        <h1>Stripe Checkout</h1>
-        <p className="checkout-title">Design+Code React Hooks Course</p>
-        <p className="checkout-description">
-          Learn how to build a website with React Hooks
-        </p>
-        <h1 className="checkout-price">$19</h1>
-        <img className="checkout-product-image" alt="Product" />
+    <div className="align-content-center mt-5">
+      <Heading m={4}>
+        <span id="stripe-checkout">Stripe Checkout</span>
+      </Heading>
+      <div className="checkout mt-5">
+        <div>
+          <Tippy content="Pay with Card">
+            <button className="btn btn-sm btn-muted">
+              <FontAwesomeIcon
+                id="credit-card"
+                icon={faCreditCard}
+              ></FontAwesomeIcon>
+            </button>
+          </Tippy>
+        </div>
         <button className="checkout-button" onClick={redirectToCheckout}>
-          <div className="grey-circle">
-            <div className="purple-circle">
-              <img className="icon" alt="credit-card-icon" />
-            </div>
-          </div>
-          <div className="text-container">
-            <p className="text">Buy</p>
-          </div>
+          <button id="checkout-btn" className="btn">
+            Continue to Checkout
+          </button>
         </button>
       </div>
-    </Fragment>
+    </div>
   );
 };
 export default CheckoutForm;

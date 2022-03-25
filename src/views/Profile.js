@@ -4,6 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/auth-context";
 import Loader from "../components/Loader/Loader";
 import { Heading } from "@chakra-ui/react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUserCircle, faSitemap } from "@fortawesome/free-solid-svg-icons";
 
 const Profile = () => {
   const emailRef = useRef();
@@ -48,20 +50,33 @@ const Profile = () => {
 
   return (
     <Fragment>
-        <Heading mt={4}>
-          <span id="dasboard">Dashboard</span>
-        </Heading>
-      <div className="container mt-4">
+      <Heading mt={4}>
+        <span id="dasboard">Dashboard</span>
+      </Heading>
+      <div className="container justify-content-center mt-4">
+        <div id="avatar" className="d-flex justify-content-center mb-4">
+          {currentUser.image ? (
+            <img src={currentUser.image} />
+          ) : (
+            <FontAwesomeIcon id="user" icon={faUserCircle}></FontAwesomeIcon>
+          )}
+        </div>
         <div className="row">
           <div className="col mt-2">
+            <div id="history-header" className="mb-3">
+              <h1>Check Order History</h1>
+            </div>
             <Link to="/profile/orders">
-              <button id="order-btn" className="btn btn-info">
-                Orders
+              <button>
+                <FontAwesomeIcon
+                  id="orders-btn"
+                  icon={faSitemap}
+                ></FontAwesomeIcon>
               </button>
             </Link>
           </div>
           <div className="col mt-2">
-            <Card id="update-info">
+            <Card className="bg-dark text-warning" id="update-info">
               <Card.Body>
                 <h2 id="dasboard-update" className="text-center mb-4">
                   Update Information
@@ -94,7 +109,10 @@ const Profile = () => {
                       placeholder="Leave blank to keep the same"
                     />
                   </Form.Group>
-                  <Button className="w-50 mt-4" type="submit">
+                  <Button
+                    className="btn-dark text-warning mt-4"
+                    type="submit"
+                  >
                     Update
                   </Button>
                 </Form>
