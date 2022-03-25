@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/auth-context";
 import Loader from "../Loader/Loader";
 import "./Auth.css";
-import { Heading } from '@chakra-ui/react';
+import { Heading } from "@chakra-ui/react";
 
 const Signin = () => {
   const emailRef = useRef();
@@ -50,7 +50,7 @@ const Signin = () => {
                 <Form.Group id="email">
                   <Form.Label>Email</Form.Label>
                   <Form.Control
-                    className="w-100"
+                    className="mb-3"
                     type="email"
                     ref={emailRef}
                     required
@@ -59,7 +59,7 @@ const Signin = () => {
                 <Form.Group id="password">
                   <Form.Label>Password</Form.Label>
                   <Form.Control
-                    className="w-100"
+                    className="mt-2"
                     type="password"
                     ref={passwordRef}
                     required
@@ -67,16 +67,18 @@ const Signin = () => {
                 </Form.Group>
                 <Button
                   disabled={loading}
-                  className="btn-dark text-warning mt-4"
+                  className="btn-dark text-warning mt-2"
                   type="submit"
                 >
                   Sign In
                 </Button>
               </Form>
             </Card.Body>
-            <div className="w-100 text-center mb-3">
+            <div className="w-100 text-center mb-2">
               <Link to="/auth/forgot-password">
-                <button className="btn btn-muted text-warning">Forgot Password?</button>
+                <button className="btn btn-muted text-warning">
+                  Forgot Password?
+                </button>
               </Link>
             </div>
           </Card>
@@ -88,8 +90,8 @@ const Signin = () => {
       >
         Sign In with Google
       </Button>
-      <div className="w-100 text-center mt-2">
-        Don't have an account?
+      <div className="text-center mt-2">
+        <button className="btn btn-muted">Don't have an account?</button>
         <Link to="/auth/signup">
           <button className="btn btn-muted" id="register">
             Register
