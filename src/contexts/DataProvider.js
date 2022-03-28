@@ -1,4 +1,10 @@
-import axios from "axios";
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import {
   collection,
   deleteDoc,
@@ -8,23 +14,12 @@ import {
   setDoc,
   updateDoc,
 } from "firebase/firestore";
-import React, {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import axios from "axios";
 import { v4 as uuid } from "uuid";
 import { db } from "../firebase/config";
 import { useAuth } from "./auth-context";
 
-export const DataContext = createContext({
-  //   token: "",
-  //   isLoggedIn: false,
-  //   login: (token) => {},
-  //   logout: () => {},
-});
+export const DataContext = createContext({});
 
 export function useData() {
   return useContext(DataContext);
@@ -345,34 +340,6 @@ const DataProvider = (props) => {
       });
     }
   };
-
-  // const orderHistory = useCallback(
-  //   async (productData) => {
-  //     const orderRef = doc(
-  //       db,
-  //       "users",
-  //       currentUser.id,
-  //       "orders",
-  //       productData.id
-  //     );
-  //     const orderDoc = await getDoc(orderRef);
-  //     if (!orderDoc.exists()) {
-  //       await setDoc(orderRef, { quantity: 1 });
-  //     } else {
-  //       // increment the product's quantity by 1
-  //       let quantity = orderDoc.data().quantity;
-  //       quantity++;
-  //       // add update cart functionality
-  //       await updateDoc(
-  //         orderRef,
-  //         { quantity: Number(quantity) },
-  //         { merge: true }
-  //       );
-  //     }
-  //     getOrders();
-  //   },
-  //   [db, currentUser.id]
-  // );
 
   const getproducts = async () => {
     await axios
