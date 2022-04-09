@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useAuth } from "../../contexts/auth-context";
 import Tippy from "@tippy.js/react";
 import "tippy.js/dist/tippy.css";
@@ -42,16 +42,16 @@ const Navbar = () => {
         <div className="collapse navbar-collapse" id="collapsibleNavId">
           <ul className="navbar-nav mr-auto mt-2 mt-lg-0 c">
             <li className="nav-item">
-              <Link className="nav-link" to="/">
+              <NavLink className="nav-link" to="/">
                 <Tippy content="Home">
                   <button className="btn btn-sm btn-muted">
                     <FontAwesomeIcon id="home" icon={faHome}></FontAwesomeIcon>
                   </button>
                 </Tippy>
-              </Link>
+              </NavLink>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/shop">
+              <NavLink className="nav-link" to="/shop">
                 <Tippy content="Shop">
                   <button className="btn btn-sm btn-muted">
                     <FontAwesomeIcon
@@ -60,10 +60,10 @@ const Navbar = () => {
                     ></FontAwesomeIcon>
                   </button>
                 </Tippy>
-              </Link>
+              </NavLink>
             </li>
             <li className="nav-link">
-              <Link to="/shop/cart">
+              <NavLink to="/shop/cart">
                 <Tippy content="Cart">
                   <button className="btn btn-sm btn-muted">
                     <FontAwesomeIcon
@@ -83,10 +83,10 @@ const Navbar = () => {
                     {currentUser.loggedIn && cart.quantity}
                   </span>
                 </Tippy>
-              </Link>
+              </NavLink>
             </li>
             <li className="nav-link">
-              <Link to="/shop/list-products">
+              <NavLink to="/shop/list-products">
                 <Tippy content="Sell on bazaar">
                   <button className="btn btn-sm btn-muted">
                     <FontAwesomeIcon
@@ -95,22 +95,22 @@ const Navbar = () => {
                     ></FontAwesomeIcon>
                   </button>
                 </Tippy>
-              </Link>
+              </NavLink>
             </li>
             <li className="nav-link">
-              <Link to="/shop/user-listings">
+              <NavLink to="/shop/user-listings">
                 <Tippy content="Items by Customers">
                   <button className="btn btn-sm btn-muted">
                     <FontAwesomeIcon id="sell" icon={faStore}></FontAwesomeIcon>
                   </button>
                 </Tippy>
-              </Link>
+              </NavLink>
             </li>
           </ul>
           <ul id="auth" className="form-inline my-2 my-lg-0">
             {!currentUser.loggedIn && (
               <li>
-                <Link className="nav-link" to="/auth/signin">
+                <NavLink className="nav-link" to="/auth/signin">
                   <Tippy content="Sign In">
                     <button className="btn btn-sm btn-muted">
                       <FontAwesomeIcon
@@ -119,12 +119,12 @@ const Navbar = () => {
                       ></FontAwesomeIcon>
                     </button>
                   </Tippy>
-                </Link>
+                </NavLink>
               </li>
             )}
             {!currentUser.loggedIn && (
               <li>
-                <Link className="nav-link" to="/auth/signup">
+                <NavLink className="nav-link" to="/auth/signup">
                   <Tippy content="Sign Up">
                     <button className="btn btn-sm btn-muted">
                       <FontAwesomeIcon
@@ -133,12 +133,12 @@ const Navbar = () => {
                       ></FontAwesomeIcon>
                     </button>
                   </Tippy>
-                </Link>
+                </NavLink>
               </li>
             )}
             {currentUser.loggedIn && (
               <li>
-                <Link className="nav-link" to="/profile">
+                <NavLink className="nav-link" to="/profile">
                   <Tippy content="Profile">
                     <button className="btn btn-sm btn-muted">
                       <FontAwesomeIcon
@@ -147,12 +147,12 @@ const Navbar = () => {
                       ></FontAwesomeIcon>
                     </button>
                   </Tippy>
-                </Link>
+                </NavLink>
               </li>
             )}
             {currentUser.loggedIn && (
               <li>
-                <Link className="nav-link" to="." onClick={() => logOut()}>
+                <NavLink className="nav-link" to="." onClick={() => logOut()}>
                   <Tippy content="Sign Out">
                     <button className="btn btn-sm btn-muted">
                       <FontAwesomeIcon
@@ -161,7 +161,7 @@ const Navbar = () => {
                       ></FontAwesomeIcon>
                     </button>
                   </Tippy>
-                </Link>
+                </NavLink>
               </li>
             )}
           </ul>

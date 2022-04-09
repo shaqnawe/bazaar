@@ -18,7 +18,7 @@ const UserItem = (props) => {
         <Card.Img
           variant="top"
           src={product.imgUrl}
-          style={{ height: "15rem" }}
+          style={{ height: "15rem", objectFit: "cover" }}
         />
         <Card.Body>
           <Card.Title>{product.name}</Card.Title>
